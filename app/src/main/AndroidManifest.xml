@@ -64,8 +64,20 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".NearestinBusiness">
+            <intent-filter>
+                <action android:name="com.example.nothi.androidamenities.NearestinBusiness" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".NearestinTech">
+            <intent-filter>
+                <action android:name="com.example.nothi.androidamenities.NearestinTech" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

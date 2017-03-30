@@ -37,14 +37,12 @@ public class NearPrinterActivity extends AppCompatActivity {
         //coordReceived.setText(sharedInfo.getString("Coordinatekey", "default" ));
         Intent listIn=getIntent();
 
-
         String messagePassed=listIn.getStringExtra("Coordkey");
         coordReceived.setText(messagePassed);
         List<String> items = Arrays.asList(messagePassed.split("\\s*,\\s*"));
         coordReceived.setText("Raw is:"+messagePassed+" Parsed is: "+" "+items.get(0)+" "+items.get(1)+" "+items.get(2));
 
         List<Double> currnetLoc=Arrays.asList(Double.parseDouble(items.get(1)), Double.parseDouble(items.get(2)));
-
 
         printerValueMap.put("Printer one", Arrays.asList(0.0, 0.0));
         printerValueMap.put("Printer two", Arrays.asList(6.0, 10.0));
@@ -54,8 +52,6 @@ public class NearPrinterActivity extends AppCompatActivity {
 
         List<Double> distanceOrder=Arrays.asList();
 
-        //////////////////////////////////////////////////////////////////////
-
         selectWC=(Button)findViewById(R.id.wc);
         selectWB=(Button)findViewById(R.id.wb);
         selectWT=(Button)findViewById(R.id.wt);
@@ -63,20 +59,28 @@ public class NearPrinterActivity extends AppCompatActivity {
                 new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-
-
-
                         Intent goingtoWC= new Intent("com.example.nothi.androidamenities.NearestinCommons");
-
                         startActivity(goingtoWC);//done
-
-
-
                     }
                 }
-
+        );
+        selectWB.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Intent goingtoWB= new Intent("com.example.nothi.androidamenities.NearestinBusiness");
+                        startActivity(goingtoWB);//done
+                    }
+                }
+        );
+        selectWT.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Intent goingtoWT= new Intent("com.example.nothi.androidamenities.NearestinTech");
+                        startActivity(goingtoWT);//done
+                    }
+                }
         );
     }
-
-
-    }
+}

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_nearestin_commons"
+    android:id="@+id/activity_nearestin_business"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.nothi.androidamenities.NearestinCommons">
+    tools:context="com.example.nothi.androidamenities.NearestinBusiness">
 
     <LinearLayout
         android:orientation="vertical"
@@ -21,14 +21,14 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="345dp"
-            android:id="@+id/printerlistview"
-            android:background="@android:color/holo_green_light" />
+            android:id="@+id/printerlistviewb"
+            android:background="?attr/colorPrimary" />
 
         <TextView
             android:text="Select a floor.."
             android:layout_width="176dp"
             android:layout_height="wrap_content"
-            android:id="@+id/selectfloor"
+            android:id="@+id/selectfloorb"
             android:textStyle="normal|bold" />
 
         <LinearLayout
@@ -37,29 +37,29 @@
             android:layout_height="38dp">
 
             <Button
-                android:text="wc1"
+                android:text="wb1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/wc1" />
+                android:id="@+id/wb1" />
 
             <Button
-                android:text="wc2"
+                android:text="wb2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/wc2" />
+                android:id="@+id/wb2" />
 
             <Button
-                android:text="wc3"
+                android:text="wb3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/wc3" />
+                android:id="@+id/wb3" />
         </LinearLayout>
 
         <TextView
             android:text="wc118, pages 247, busy."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/status" />
+            android:id="@+id/statusb" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -73,13 +73,13 @@
                 android:inputType="textPersonName"
                 android:text="add new printer csv: room, description "
                 android:ems="10"
-                android:id="@+id/newprinterinput" />
+                android:id="@+id/newprinterinputb" />
 
             <Button
                 android:text="Add Printer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/addPrbt"
+                android:id="@+id/addPrbtb"
                 android:layout_weight="0.36"
                 android:background="@color/colorPrimary" />
 
@@ -87,10 +87,11 @@
                 android:text="Remove Printer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/removePrbt"
+                android:id="@+id/removePrbtb"
                 android:layout_weight="0.74"
                 android:background="@android:color/holo_red_dark" />
 
         </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>
