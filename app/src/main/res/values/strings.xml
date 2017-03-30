@@ -9,4 +9,8 @@
     <string name="addMicrowaveHint">Add a new microwave</string>
     <string name="messageTitleText">Messages:</string>
     <string name="microDelText">Delete this Microwave</string>
+    <string name="list_of_classrooms">List of classrooms</string>
+    <string name="add">add</string>
+    <string name="classroom">Classroom</string>
+    <string name="description">Description</string>
 </resources>

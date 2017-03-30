@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         //first para, name of preference's file
         editallInfo= sharedInfo.edit();//edit into Info all the info
 
-
         findPrinterB.setOnClickListener(
                 new View.OnClickListener(){
                     @Override
@@ -77,6 +76,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(findNearMicro);
             }
         });
+
+        findVendingB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent findNearVending = new Intent(MainActivity.this, NearVendingActivity.class);
+                startActivity(findNearVending);
+            }
+        });
     }
     @Override
     protected void onResume(){
@@ -106,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
     public void saveInfo(View view){
         //takes view to get infoz
 
-
         editallInfo.putString("Coordinatekey", coordInput.getText().toString() );//from coordinatkey
         //passes same coordinate to all activities
 
@@ -114,14 +120,4 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "commit successful, finding nearest amenity!", Toast.LENGTH_LONG).show();
 
     }
-
-
-
-
-
-
-
-
-
-
 }
