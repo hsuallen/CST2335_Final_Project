@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">AndroidAmenities</string>
     <string name="title_activity_near_female_washroom">NearFemaleWashroomActivity</string>
+    <string name="addButton">Add</string>
+    <string name="deleteButton">Delete</string>
+    <string name="refreshButton">Refresh Data</string>
+    <string name="title_activity_microwave">MicrowaveActivity</string>
+    <string name="microwaveHeading">Here\'s where you can find a microwave:</string>
+    <string name="addMicrowaveHint">Add a new microwave</string>
+    <string name="messageTitleText">Messages:</string>
+    <string name="microDelText">Delete this Microwave</string>
 </resources>

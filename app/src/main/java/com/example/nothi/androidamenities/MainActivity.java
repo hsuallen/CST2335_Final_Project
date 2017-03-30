@@ -69,6 +69,14 @@ public class MainActivity extends AppCompatActivity {
                 }
 
         );
+        // findMicroB listener added by Scott to launch NearMicrowave.class
+        findMicroB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent findNearMicro = new Intent(MainActivity.this, NearMicrowave.class);
+                startActivity(findNearMicro);
+            }
+        });
     }
     @Override
     protected void onResume(){
