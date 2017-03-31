@@ -60,16 +60,14 @@ public class NearestinCommons extends AppCompatActivity {
         printerValueMap.put("C112", "Black and White only 255 pages queue: 0");
         printerValueMap.put("C138", "Colour 58 pages, queue: 10");
         printerValueMap.put("C148", "Colour 670 pages, queue: 6");
-        /////////////////
         printerValueMap.put("C222", "Colour 70 pages, queue: 7");
         printerValueMap.put("C215", "Colour 6 pages, queue: 0");
         printerValueMap.put("C201", "Colour 0 pages, queue: 14");
-        /////
         printerValueMap.put("C314", "Black and White only 570 pages, queue: 0");
         printerValueMap.put("C322", "Colour 1246 pages, queue: 0");
         printerValueMap.put("C308", "Colour 518 pages, queue: 4");
 
-        printers =new ArrayList<>( Arrays.asList("C110","C112","C138","C148"));
+        printers = new ArrayList<>(Arrays.asList("C110","C112","C138","C148"));
         adapter =new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, printers);
         printerListViewwc.setAdapter(adapter);//we do this to be able to notify change.
 
@@ -81,76 +79,66 @@ public class NearestinCommons extends AppCompatActivity {
             }
         });
 
-        wcfloorone.setOnClickListener(
-            new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    printers.clear();
+        wcfloorone.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                printers.clear();
 
-                    printers.add("C110");
-                    printers.add("C112");
-                    printers.add("C138");
-                    printers.add("C148");
+                printers.add("C110");
+                printers.add("C112");
+                printers.add("C138");
+                printers.add("C148");
 
-                    adapter.notifyDataSetChanged();
-                }
+                adapter.notifyDataSetChanged();
             }
-        );
+        });
 
-        wcfloortwo.setOnClickListener(
-            new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    printers.clear();
+        wcfloortwo.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                printers.clear();
 
-                    printers.add("C222");
-                    printers.add("C215");
-                    printers.add("C201");
+                printers.add("C222");
+                printers.add("C215");
+                printers.add("C201");
 
-                    adapter.notifyDataSetChanged();
-                }
+                adapter.notifyDataSetChanged();
             }
-        );
+        });
 
-        wcfloorthree.setOnClickListener(
-            new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    printers.clear();
-                    printers.add("C322");
-                    printers.add("C314");
-                    printers.add("C308");
+        wcfloorthree.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                printers.clear();
+                printers.add("C322");
+                printers.add("C314");
+                printers.add("C308");
 
-                    adapter.notifyDataSetChanged();
-                }
+                adapter.notifyDataSetChanged();
             }
-        );
+        });
 
-        addprinter.setOnClickListener(
-            new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {printerin=(EditText)findViewById(R.id.newprinterinput);
-                    String messagePassed=printerin.getText().toString();
+        addprinter.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {printerin=(EditText)findViewById(R.id.newprinterinput);
+                String messagePassed=printerin.getText().toString();
 
-                    List<String> items = Arrays.asList(messagePassed.split("\\s*,\\s*"));
+                List<String> items = Arrays.asList(messagePassed.split("\\s*,\\s*"));
 
-                    printers.add(items.get(0));
-                    printerValueMap.put(items.get(0), items.get(1));
+                printers.add(items.get(0));
+                printerValueMap.put(items.get(0), items.get(1));
 
-                    adapter.notifyDataSetChanged();
-                }
+                adapter.notifyDataSetChanged();
             }
-        );
+        });
 
-        removeprinter.setOnClickListener(
-            new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {printerin=(EditText)findViewById(R.id.newprinterinput);
-                    printers.remove(positiontracker);
+        removeprinter.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {printerin=(EditText)findViewById(R.id.newprinterinput);
+                printers.remove(positiontracker);
 
-                    adapter.notifyDataSetChanged();
-                }
+                adapter.notifyDataSetChanged();
             }
-        );
+        });
     }
 }

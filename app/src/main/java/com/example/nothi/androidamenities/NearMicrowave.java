@@ -47,7 +47,7 @@ public class NearMicrowave extends AppCompatActivity {
      */
     Button addButton;
     /**
-     * This Listview container contains the ArrayList microwaves
+     * This Listview container contains the ArrayList microwave
      */
     ListView list;
     /**
@@ -94,7 +94,7 @@ public class NearMicrowave extends AppCompatActivity {
             }
         });
 
-        // Populate the list of microwaves; currently called from a dummy method but will be
+        // Populate the list of microwave; currently called from a dummy method but will be
         // downloadable content in the future.
         microwaves = new ArrayList<>();
         populateList();
@@ -132,7 +132,7 @@ public class NearMicrowave extends AppCompatActivity {
     }
 
     /**
-     * Placeholder method to simulate a downloadable list of microwaves. To be replaced by an actual
+     * Placeholder method to simulate a downloadable list of microwave. To be replaced by an actual
      * download and AsyncTask.
      */
     private void populateList() {

@@ -55,32 +55,29 @@ public class NearPrinterActivity extends AppCompatActivity {
         selectWC=(Button)findViewById(R.id.wc);
         selectWB=(Button)findViewById(R.id.wb);
         selectWT=(Button)findViewById(R.id.wt);
-        selectWC.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        Intent goingtoWC= new Intent("com.example.nothi.androidamenities.NearestinCommons");
-                        startActivity(goingtoWC);//done
-                    }
-                }
-        );
-        selectWB.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        Intent goingtoWB= new Intent("com.example.nothi.androidamenities.NearestinBusiness");
-                        startActivity(goingtoWB);//done
-                    }
-                }
-        );
-        selectWT.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        Intent goingtoWT= new Intent("com.example.nothi.androidamenities.NearestinTech");
-                        startActivity(goingtoWT);//done
-                    }
-                }
-        );
+
+        selectWC.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent goingtoWC= new Intent(NearPrinterActivity.this, NearestinCommons.class);
+                startActivity(goingtoWC);
+            }
+        });
+
+        selectWB.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent goingtoWB= new Intent(NearPrinterActivity.this, NearestinBusiness.class);
+                startActivity(goingtoWB);
+            }
+        });
+
+        selectWT.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent goingtoWT= new Intent(NearPrinterActivity.this, NearestinTech.class);
+                startActivity(goingtoWT);
+            }
+        });
     }
 }

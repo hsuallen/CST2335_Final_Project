@@ -47,25 +47,17 @@ public class NearestinTech extends AppCompatActivity {
         addprinter=(Button)findViewById(R.id.addPrbt);
         removeprinter=(Button)findViewById(R.id.removePrbt);
 
-
-
         final Map<String, String > printerValueMap=new HashMap<>();
         printerValueMap.put("T110", "Black and White only 500 pages queue: 20");
         printerValueMap.put("T112", "Black and White only 255 pages queue: 0");
         printerValueMap.put("T138", "Colour 58 pages, queue: 10");
         printerValueMap.put("T148", "Colour 670 pages, queue: 6");
-        /////////////////
         printerValueMap.put("T222", "Colour 70 pages, queue: 7");
         printerValueMap.put("T215", "Colour 6 pages, queue: 0");
         printerValueMap.put("T201", "Colour 0 pages, queue: 14");
-        /////
         printerValueMap.put("T314", "Black and White only 570 pages, queue: 0");
         printerValueMap.put("T322", "Colour 1246 pages, queue: 0");
         printerValueMap.put("T308", "Colour 518 pages, queue: 4");
-
-
-
-
 
         printers =new ArrayList<>( Arrays.asList("T110","T112","T138","T148"));
 
@@ -76,109 +68,72 @@ public class NearestinTech extends AppCompatActivity {
         printerListViewwt.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick (AdapterView<?> parent, View view, int position, long id){
-
                 status.setText(printerValueMap.get(printers.get(position)));
                 positiontracker=printers.indexOf(printers.get(position));
-
-                //Toast.makeText(getApplicationContext(), printers.get(position), Toast.LENGTH_SHORT).show();
             }
 
         });
-        wcfloorone.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        printers.clear();
 
-                        printers.add("T110");
-                        printers.add("T112");
-                        printers.add("T138");
-                        printers.add("T148");
+        wcfloorone.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                printers.clear();
 
+                printers.add("T110");
+                printers.add("T112");
+                printers.add("T138");
+                printers.add("T148");
 
+                adapter.notifyDataSetChanged();
+            }
+        });
 
-                        adapter.notifyDataSetChanged();
+        wcfloortwo.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                printers.clear();
 
+                printers.add("T222");
+                printers.add("T215");
+                printers.add("T201");
 
+                adapter.notifyDataSetChanged();
+            }
+        });
 
+        wcfloorthree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                printers.clear();
+                printers.add("T322");
+                printers.add("T314");
+                printers.add("T308");
 
-                    }
-                }
+                adapter.notifyDataSetChanged();
+            }
+        });
 
-        );
-        wcfloortwo.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        printers.clear();
+        addprinter.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                printerin = (EditText)findViewById(R.id.newprinterinput);
+                String messagePassed = printerin.getText().toString();
 
-                        printers.add("T222");
-                        printers.add("T215");
-                        printers.add("T201");
+                List<String> items = Arrays.asList(messagePassed.split("\\s*,\\s*"));
 
-                        adapter.notifyDataSetChanged();
+                printers.add(items.get(0));
+                printerValueMap.put(items.get(0), items.get(1));
 
+                adapter.notifyDataSetChanged();
+            }
+        });
 
-
-
-                    }
-                }
-
-        );
-        wcfloorthree.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        printers.clear();
-                        printers.add("T322");
-                        printers.add("T314");
-                        printers.add("T308");
-
-                        adapter.notifyDataSetChanged();
-
-
-
-                    }
-                }
-
-        );
-
-        addprinter.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {printerin=(EditText)findViewById(R.id.newprinterinput);
-                        String messagePassed=printerin.getText().toString();
-
-                        List<String> items = Arrays.asList(messagePassed.split("\\s*,\\s*"));
-
-                        printers.add(items.get(0));
-                        printerValueMap.put(items.get(0), items.get(1));
-
-                        adapter.notifyDataSetChanged();
-
-
-
-                    }
-                }
-
-        );
-
-        removeprinter.setOnClickListener(
-                new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {printerin=(EditText)findViewById(R.id.newprinterinput);
-                        printers.remove(positiontracker);
-
-                        adapter.notifyDataSetChanged();
-
-
-
-                    }
-                }
-
-        );
-
+        removeprinter.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {printerin=(EditText)findViewById(R.id.newprinterinput);
+                printers.remove(positiontracker);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
-
-
 }
