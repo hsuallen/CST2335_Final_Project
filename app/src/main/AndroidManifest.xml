@@ -15,19 +15,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NearPrinterActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".NearMaleWashroomActivity"></activity>
-        <activity android:name=".NearFemaleWashroomActivity"></activity>
-        <activity android:name=".NearMicrowave"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".MicroDetails"></activity>
-        <activity android:name=".NearVendingActivity"></activity>
-        <activity android:name=".NearestinCommons"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".NearestinBusiness"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".NearestinTech"
-            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".NearPrinterActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".NearMaleWashroomActivity" />
+        <activity android:name=".NearFemaleWashroomActivity" />
+        <activity
+            android:name=".NearMicrowave"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".MicroDetails" />
+        <activity android:name=".NearVendingActivity" />
+        <activity
+            android:name=".NearestinCommons"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".NearestinBusiness"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".NearestinTech"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".TestToolBar"
+            android:label="@string/title_activity_test_tool_bar"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
+
 </manifest>

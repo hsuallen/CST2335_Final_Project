@@ -1,16 +1,27 @@
 <resources>
-    <string name="app_name">AndroidAmenities</string>
+    <string name="app_name">Amenities</string>
+
+    <!-- Activity Titles -->
     <string name="title_activity_near_female_washroom">NearFemaleWashroomActivity</string>
+    <string name="title_activity_microwave">MicrowaveActivity</string>
+    <string name="title_activity_test_tool_bar">Test</string>
+
+    <!-- Buttons -->
     <string name="addButton">Add</string>
     <string name="deleteButton">Delete</string>
     <string name="refreshButton">Refresh Data</string>
-    <string name="title_activity_microwave">MicrowaveActivity</string>
-    <string name="microwaveHeading">Here\'s where you can find a microwave:</string>
-    <string name="addMicrowaveHint">Add a new microwave</string>
-    <string name="messageTitleText">Messages:</string>
-    <string name="microDelText">Delete this Microwave</string>
-    <string name="list_of_classrooms">List of classrooms</string>
+
+    <!-- Classroom Related Strings -->
     <string name="add">add</string>
     <string name="classroom">Classroom</string>
     <string name="description">Description</string>
+    <string name="list_of_classrooms">List of classrooms</string>
+
+    <!-- Microwave Related Strings -->
+    <string name="addMicrowaveHint">Add a new microwave</string>
+    <string name="microwaveHeading">Here\'s where you can find a microwave:</string>
+    <string name="microDelText">Delete this Microwave</string>
+
+    <!-- Miscellaneous Strings -->
+    <string name="messageTitleText">Messages:</string>
 </resources>

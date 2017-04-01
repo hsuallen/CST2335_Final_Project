@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,12 +16,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     protected static final String ACTIVITY_NAME = "OptionsActivity";
-
-    private Button findPrinterB;
-    private Button findMwashroonB;
-    private Button findFwashroonB;
-    private Button findMicroB;
-    private Button findVendingB;
     private EditText coordInput;
 
     //store and edit information
@@ -30,54 +27,44 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findPrinterB = (Button)findViewById(R.id.printerbutton);
-        findMwashroonB = (Button)findViewById(R.id.malewashroombutton);
-        findFwashroonB = (Button)findViewById(R.id.femalewashroombutton);;
-        findMicroB = (Button)findViewById(R.id.mircobutton);
-        findVendingB = (Button)findViewById(R.id.vendingbutton);
+
         coordInput = (EditText) findViewById(R.id.coordinateInput);
 
         sharedInfo = getSharedPreferences("userInfoKey1", Context.MODE_PRIVATE);
         //first para, name of preference's file
         editallInfo = sharedInfo.edit();//edit into Info all the info
+    }
 
-        findPrinterB.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //need to overrid abstract.
-                //create obj intent class
-                saveInfo(v);
-                //displayInfo(v);
+    @Override
+    public boolean onCreateOptionsMenu(Menu m) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, m);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem mi) {
+        int id = mi.getItemId();
+
+        switch(id) {
+            case R.id.action_one:
+                startActivity(new Intent(MainActivity.this, NearMicrowave.class));
+                break;
+            case R.id.action_two:
+                startActivity(new Intent(MainActivity.this, NearVendingActivity.class));
+                break;
+            case R.id.action_three:
                 String dfCoordInput= (String)  coordInput.getText().toString();
 
                 Log.i("Coordinate input is ", dfCoordInput);
 
                 Intent findnearPrinter = new Intent(MainActivity.this, NearPrinterActivity.class);
-                //put activity package route
-                //now let's start
                 findnearPrinter.putExtra("Coordkey", dfCoordInput);
-                startActivity(findnearPrinter);//done
-            }
-        });
-
-        // findMicroB listener added by Scott to launch NearMicrowave.class
-        findMicroB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent findNearMicro = new Intent(MainActivity.this, NearMicrowave.class);
-                startActivity(findNearMicro);
-            }
-        });
-
-        findVendingB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent findNearVending = new Intent(MainActivity.this, NearVendingActivity.class);
-                startActivity(findNearVending);
-            }
-        });
+                startActivity(findnearPrinter);
+                break;
+        }
+        return true;
     }
+
     @Override
     protected void onResume(){
         super.onResume();

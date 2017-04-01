@@ -35,39 +35,5 @@
             android:layout_weight="0.03"
             android:text="example: 1, 40, 57" />
 
-        <Button
-            android:text="Nearest Printer "
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/printerbutton"
-            android:layout_weight="0.03" />
-
-        <Button
-            android:text=" Nearest Male Washroom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/malewashroombutton"
-            android:layout_weight="0.03" />
-
-        <Button
-            android:text="Nearest Female Machine"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/femalewashroombutton"
-            android:layout_weight="0.03" />
-
-        <Button
-            android:text="Nearest Vending Machine"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/vendingbutton"
-            android:layout_weight="0.03" />
-
-        <Button
-            android:text="Nearest Microwave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/mircobutton"
-            android:layout_weight="0.03" />
     </LinearLayout>
 </RelativeLayout>

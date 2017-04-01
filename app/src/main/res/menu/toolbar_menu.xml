@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_one"
+        android:title="Microwave"
+        android:icon="@drawable/microwave"
+        android:orderInCategory="101"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_two"
+        android:title="vendingMachine"
+        android:icon="@drawable/vending_machine"
+        android:orderInCategory="200"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_three"
+        android:title="printers"
+        android:icon="@drawable/printer"
+        android:orderInCategory="300"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_four"
+        android:title="washrooms"
+        android:icon="@drawable/toilet"
+        android:orderInCategory="400"
+        app:showAsAction="always" />
 </menu>
