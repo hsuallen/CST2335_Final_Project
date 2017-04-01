@@ -5,24 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="allenhsu.cst2335_final_project.MainActivity">
+    tools:context="com.example.nothi.androidamenities.NearVendingActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/list_of_classrooms" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-    <ListView android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listview"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/editText1"
-        android:layout_below="@+id/textView">
-    </ListView>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/list_of_classrooms" />
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="394dp"
+            android:layout_height="382dp"
+            android:layout_above="@+id/editText1"
+            android:layout_below="@+id/textView"
+            android:layout_weight="0.24"></ListView>
+    </LinearLayout>
 
     <EditText
         android:id="@+id/editText1"
@@ -50,5 +57,5 @@
         android:text="@string/add"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/listview" />
+        android:layout_alignTop="@+id/editText1" />
 </RelativeLayout>

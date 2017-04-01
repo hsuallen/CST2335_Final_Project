@@ -2,12 +2,15 @@ package com.example.nothi.androidamenities;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -124,6 +127,27 @@ public class NearVendingActivity extends AppCompatActivity {
                 }
             });
         } catch (Exception e) { Log.e("Exception: ", e.getMessage()); }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu m) {
+        getMenuInflater().inflate(R.menu.toolbar_about, m);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem mi) {
+        int id = mi.getItemId();
+
+        switch(id) {
+            case R.id.action_help:
+                // TODO: add a snackbar here
+                break;
+            case R.id.action_home:
+                finish();
+                break;
+        }
+        return true;
     }
 
     protected void onResume() {

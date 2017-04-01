@@ -17,6 +17,13 @@
     <string name="description">Description</string>
     <string name="list_of_classrooms">List of classrooms</string>
 
+    <!-- Main Activity Strings -->
+    <string name="main_welcome">Welcome to Algonquin Amenities Finder!</string>
+    <string name="main_begin">To start out, choose one of the icons at the top. Each of the icons
+    represent microwaves, vending machines, printers, and washrooms in the order from left to right.</string>
+    <string name="main_about">This app is created for the purpose of CST2335 final project. It is a
+    collaboration project between Allen Hsu, Scott McClare, Wei Cui, and Jacob Heaton.</string>
+
     <!-- Microwave Related Strings -->
     <string name="addMicrowaveHint">Add a new microwave</string>
     <string name="microwaveHeading">Here\'s where you can find a microwave:</string>

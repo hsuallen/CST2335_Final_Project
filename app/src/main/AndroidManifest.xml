@@ -37,7 +37,8 @@
         <activity
             android:name=".TestToolBar"
             android:label="@string/title_activity_test_tool_bar"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".help_vending"></activity>
     </application>
 
 </manifest>
