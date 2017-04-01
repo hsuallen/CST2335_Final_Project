@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.nothi.androidamenities">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/activity_toolbar" />
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".NearPrinterActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".NearMaleWashroomActivity" />
+        <activity android:name=".NearFemaleWashroomActivity" />
+        <activity
+            android:name=".NearMicrowave"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".MicroDetails" />
+        <activity android:name=".NearVendingActivity" />
+        <activity
+            android:name=".NearestinCommons"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".NearestinBusiness"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".NearestinTech"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".TestToolBar"
+            android:label="@string/title_activity_test_tool_bar"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>
