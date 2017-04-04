@@ -1,10 +1,13 @@
 package com.example.nothi.androidamenities;
 
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -95,8 +98,6 @@ public class NearVendingActivity extends AppCompatActivity {
                 Log.i(ACTIVITY_NAME, "Column " + i + "'s name is: " + cursor.getColumnName(i));
             }
 
-            final EditText room = (EditText)findViewById(R.id.editText1);
-            final EditText desc = (EditText)findViewById(R.id.editText2);
             Button add = (Button)findViewById(R.id.button3);
             ListView list = (ListView)findViewById(R.id.listview);
 
@@ -106,17 +107,7 @@ public class NearVendingActivity extends AppCompatActivity {
             add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ContentValues cv = new ContentValues();
-
-                    String Room = room.getText().toString();
-                    String Desc = desc.getText().toString();
-                    classrooms.add(new Classroom(Room, Desc));
-                    cv.put(ClassroomDatabaseHelper.KEY_ROOM, Room);
-                    cv.put(ClassroomDatabaseHelper.KEY_DESCRIPTION, Desc);
-                    db.insert(ClassroomDatabaseHelper.name, "Null replacement value", cv);
-                    adapter.notifyDataSetChanged();
-                    room.setText("");
-                    desc.setText("");
+                    customDialog();
                 }
             });
 
@@ -173,5 +164,37 @@ public class NearVendingActivity extends AppCompatActivity {
     protected void onDestroy() {
         Log.i(ACTIVITY_NAME, "In onDestroy()");
         super.onDestroy();
+    }
+
+    private void customDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View dialog = inflater.inflate(R.layout.allen_classroom_input, null);
+
+        builder.setView(dialog);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Dialog d = (Dialog)dialog;
+                EditText room = (EditText)d.findViewById(R.id.editText1);
+                EditText desc = (EditText)d.findViewById(R.id.editText2);
+
+                ContentValues cv = new ContentValues();
+
+                String Room = room.getText().toString();
+                String Desc = desc.getText().toString();
+                classrooms.add(new Classroom(Room, Desc));
+                cv.put(ClassroomDatabaseHelper.KEY_ROOM, Room);
+                cv.put(ClassroomDatabaseHelper.KEY_DESCRIPTION, Desc);
+                db.insert(ClassroomDatabaseHelper.name, "Null replacement value", cv);
+                adapter.notifyDataSetChanged();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+
+        builder.create().show();
     }
 }
