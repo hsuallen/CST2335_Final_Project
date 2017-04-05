@@ -261,4 +261,4 @@ public class MicroDetails extends AppCompatActivity {
 
     } // end of inner class ChatLog
 
-} // end of outer class MicroDetails.java
+} // end of outer class MicroDetails
