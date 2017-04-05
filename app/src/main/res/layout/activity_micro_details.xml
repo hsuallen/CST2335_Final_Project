@@ -38,6 +38,12 @@
         android:paddingTop="10dp"
         android:text="@string/messageTitleText" />
 
+    <ProgressBar
+        android:id="@+id/chatProgress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <ListView
         android:id="@+id/chatMsgs"
         android:layout_width="match_parent"
