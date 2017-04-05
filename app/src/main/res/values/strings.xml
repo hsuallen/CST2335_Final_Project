@@ -28,6 +28,11 @@
     <string name="addMicrowaveHint">Add a new microwave</string>
     <string name="microwaveHeading">Here\'s where you can find a microwave:</string>
     <string name="microDelText">Delete this Microwave</string>
+    <string name="microSendChat">Send a Message</string>
+    <string name="microSendBtn">Send</string>
+    <string name="microCancelBtn">Cancel</string>
+    <string name="microChatName">Name</string>
+    <string name="microChatMsg">Message</string>
 
     <!-- Miscellaneous Strings -->
     <string name="messageTitleText">Messages:</string>

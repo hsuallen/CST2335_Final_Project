@@ -47,5 +47,11 @@
     <ListView
         android:id="@+id/chatMsgs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="284dp" />
+
+    <Button
+        android:id="@+id/chatButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/microSendChat" />
 </LinearLayout>

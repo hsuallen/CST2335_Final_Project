@@ -13,28 +13,29 @@
 
 package com.example.nothi.androidamenities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Xml;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InterruptedIOException;
-import java.io.Reader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -55,6 +56,8 @@ public class MicroDetails extends AppCompatActivity {
     TextView microDetail, msgsHeading;
     /** Button for deleting this particular microwave. */
     Button deleteMsgButton;
+    /** Button for opening a message dialog box */
+    Button chatButton;
     /**
      * A ListView containing "chat" messages. Presently hard-coded, but in a future iteration will
      * be downloaded from the Web from a site that simulates random chat messages.
@@ -75,6 +78,10 @@ public class MicroDetails extends AppCompatActivity {
     long microId;
     /** URL of a PHP script that simulates chat messages. */
     String chatURL = "http://www.algonquinstudents.ca/~mccl0173/cst2335/chat.php";
+    /** EditText containing a user name for chat messages */
+    EditText chatName;
+    /** EditText containing a chat message */
+    EditText chatMsg;
 
 
     @Override
@@ -88,6 +95,7 @@ public class MicroDetails extends AppCompatActivity {
         microText = i.getExtras().getString("microText");
         microDetail = (TextView) findViewById(R.id.msgText);
         microDetail.setText(microText);
+        //a = new ArrayAdapter<String>(MicroDetails.this, android.R.layout.simple_list_item_1, microChatMsgs);
 
         // Set the progress bar to 0% and make it invisible
         progressBar = (ProgressBar) findViewById(R.id.chatProgress);
@@ -102,11 +110,6 @@ public class MicroDetails extends AppCompatActivity {
         ChatLog chatlog = new ChatLog();
         chatlog.execute(chatURL);
 
-        // Show the messages
-        //a = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, microChatMsgs);
-        //chatMsgs.setAdapter(a);
-        //chatMsgs.setAdapter(a);
-
         // enable the Delete button
         deleteMsgButton = (Button) findViewById(R.id.microDelButton);
         deleteMsgButton.setOnClickListener(new View.OnClickListener() {
@@ -120,19 +123,49 @@ public class MicroDetails extends AppCompatActivity {
             }
         });
 
+        // enable the "Send a Message" button
+        chatButton = (Button) findViewById(R.id.chatButton);
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeChatDialog();
+            }
+        });
     }
 
+    // create the message custom dialog
 
+    public void makeChatDialog() {
+        AlertDialog.Builder b = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View v = inflater.inflate(R.layout.dialog_micro_chat, null);
+        chatName = (EditText) v.findViewById(R.id.chatNameEdit);
+        chatMsg = (EditText) v.findViewById(R.id.chatMsgEdit);
 
-    /**
-     * Placeholder method simulating chat messages; to be replaced in future iterations with
-     * downloaded content from a chat simulator.
-     */
-    protected void populateChat() {
-        microChatMsgs.add("One microwave has a blown fuse or something - long lineup. - @Scott");
-        microChatMsgs.add("Is this thing working? It takes forever to heat soup. - @Wei");
-        microChatMsgs.add("Too many people waiting, I'm going to the caf. - @Jacob");
+        b.setView(v)
+                .setTitle("Send a Message")
+                .setPositiveButton(R.string.microSendBtn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // add the message to the chat window
+                        microChatMsgs.add(chatName.getText().toString());
+                        microChatMsgs.add(chatMsg.getText().toString());
+                        a.notifyDataSetChanged();
+                        // notify the user with a Toast
+                        Toast.makeText(v.getContext(), "Message sent!", Toast.LENGTH_SHORT);
+                    }
+
+                })
+                .setNegativeButton(R.string.microCancelBtn, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // just cancel
+                    }
+                })
+                .create()
+                .show();
     }
+
 
     /**
      * This inner class is an AsyncTask that grabs an XML file simulating "chat" messages from my
@@ -193,7 +226,6 @@ public class MicroDetails extends AppCompatActivity {
                 // Show the messages
                 a = new ArrayAdapter<String>(MicroDetails.this, android.R.layout.simple_list_item_1, microChatMsgs);
                 chatMsgs.setAdapter(a);
-
             }
         }
         /**
@@ -226,6 +258,7 @@ public class MicroDetails extends AppCompatActivity {
             // Load completed - set the progress bar to 100%
             publishProgress(100);
         }
+
     } // end of inner class ChatLog
 
 } // end of outer class MicroDetails.java
