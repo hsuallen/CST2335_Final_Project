@@ -16,6 +16,7 @@ package com.example.nothi.androidamenities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -125,9 +126,14 @@ public class NearMicrowave extends AppCompatActivity {
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK ) {
+            // remove the microwave from the list
             int microId = (int) data.getExtras().getLong("microId");
             microwaves.remove(microId);
             a.notifyDataSetChanged();
+            // notify the user that it was done
+            Snackbar.make(list, R.string.delMicroSnackbar, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null)
+                    .show();
         }
     }
 

@@ -33,6 +33,11 @@
     <string name="microCancelBtn">Cancel</string>
     <string name="microChatName">Name</string>
     <string name="microChatMsg">Message</string>
+    <string name="microChatHint">Enter a message</string>
+    <string name="delMicroTitle">Are you sure?</string>
+    <string name="delMicroOK">Delete</string>
+    <string name="delMicroCancel">Cancel</string>
+    <string name="delMicroSnackbar">Microwave deleted!</string>
 
     <!-- Miscellaneous Strings -->
     <string name="messageTitleText">Messages:</string>

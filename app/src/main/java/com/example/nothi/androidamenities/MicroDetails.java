@@ -115,11 +115,7 @@ public class MicroDetails extends AppCompatActivity {
         deleteMsgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("microId", microId);
-                setResult(RESULT_OK, returnIntent);
-                finish();
+                deleteDialog();
             }
         });
 
@@ -133,8 +129,32 @@ public class MicroDetails extends AppCompatActivity {
         });
     }
 
-    // create the message custom dialog
+    // create an AlertDialog for deleting the microwave
+    public void deleteDialog() {
+        AlertDialog.Builder d = new AlertDialog.Builder(this);
+        d.setTitle(R.string.delMicroTitle)
+                .setMessage("This can't be undone.")
+                .setPositiveButton(R.string.delMicroOK, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // OK was clicked; return to NearMicrowave and delete the microwave
+                        Intent returnIntent = new Intent();
+                        returnIntent.putExtra("microId", microId);
+                        setResult(RESULT_OK, returnIntent);
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.delMicroCancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Cancel was clicked; do nothing
+                    }
+                 })
+                .create()
+                .show();
+    }
 
+    // create the message custom dialog
     public void makeChatDialog() {
         AlertDialog.Builder b = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -152,7 +172,8 @@ public class MicroDetails extends AppCompatActivity {
                         microChatMsgs.add(chatMsg.getText().toString());
                         a.notifyDataSetChanged();
                         // notify the user with a Toast
-                        Toast.makeText(v.getContext(), "Message sent!", Toast.LENGTH_SHORT);
+                        Toast msgToast = Toast.makeText(v.getContext(), "Message sent!", Toast.LENGTH_SHORT);
+                        msgToast.show();
                     }
 
                 })
