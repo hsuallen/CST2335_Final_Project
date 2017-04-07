@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+        <TextView
+            android:id="@+id/microwaveHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/microwaveHeading"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <ListView
+            android:id="@+id/microwaveList"
+            android:layout_width="300dp"
+            android:layout_height="250dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/microwaveHeading"
+            android:background="@android:color/background_light" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.design.widget.TextInputLayout>
+
+        <EditText
+            android:id="@+id/addMicrowave"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/addMicrowaveHint"
+            android:layout_below="@+id/microwaveList"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/addButton" />
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/addButton"
+            android:layout_below="@+id/microwaveList"
+            android:layout_alignEnd="@+id/microwaveList" />
+
+        <FrameLayout
+            android:id="@+id/chatFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/microwaveList">
+
+        </FrameLayout>
+
+</RelativeLayout>
+
+

@@ -18,11 +18,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -43,6 +45,7 @@ public class NearMicrowave extends AppCompatActivity {
      * The name of this activity
      */
     public static final String ACTIVITY_NAME = "NearMicrowave";
+    boolean isTablet;
     /**
      * Button to add new microwave items to the list
      */
@@ -69,6 +72,8 @@ public class NearMicrowave extends AppCompatActivity {
      */
     int requestCode = 100;
 
+
+
     /**
      * Creates the activity NearMicrowave.
      * @param savedInstanceState
@@ -77,6 +82,16 @@ public class NearMicrowave extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_microwave);
+
+        FrameLayout fl = (FrameLayout) findViewById(R.id.chatFragment);
+        if (fl == null) {
+            isTablet = false;
+            Log.i(ACTIVITY_NAME, "Phone view");
+        }
+        else {
+            isTablet = true;
+            Log.i(ACTIVITY_NAME, "Tablet view");
+        }
 
         list = (ListView) findViewById(R.id.microwaveList); // the ListView resource on the layout
         addMicro = (EditText) findViewById(R.id.addMicrowave); // the EditText resource on the layout
@@ -106,15 +121,34 @@ public class NearMicrowave extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                // Create an Intent and add the clicked message and its ID to its Bundle
-                // then launch the MicroDetails activity
-                Intent intent = new Intent(NearMicrowave.this, MicroDetails.class);
-                intent.putExtra("microId", l);
-                intent.putExtra("microText", (String) adapterView.getItemAtPosition(i));
-                startActivityForResult(intent, requestCode);
+                Bundle b = new Bundle();
+                b.putLong("microId", l);
+                b.putString("microText", (String) adapterView.getItemAtPosition(i));
+
+
+                if (isTablet) {
+                    // if a tablet, send MicroDetails to the FrameLayout
+                    MicrowaveFragment micro = new MicrowaveFragment();
+                    micro.setArguments(b);
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.chatFragment, micro)
+                            .commit();
+                }
+                else {
+                    // if a phone then launch as a separate Activity
+                    Intent intent = new Intent(NearMicrowave.this, MicroDetails.class);
+                    intent.putExtra("microId", l);
+                    intent.putExtra("microText", (String) adapterView.getItemAtPosition(i));
+                    startActivityForResult(intent, requestCode);
+                }
 
             }
         });
+
+
+
+
     }
 
     /**
@@ -137,6 +171,7 @@ public class NearMicrowave extends AppCompatActivity {
         }
     }
 
+
     /**
      * Placeholder method to simulate a downloadable list of microwave. To be replaced by an actual
      * download and AsyncTask.
@@ -148,4 +183,5 @@ public class NearMicrowave extends AppCompatActivity {
         microwaves.add("E Building - vending machine room on 2nd floor");
     }
 
-}
+
+} // end of class NearMicrowave

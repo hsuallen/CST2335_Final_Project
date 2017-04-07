@@ -83,203 +83,27 @@ public class MicroDetails extends AppCompatActivity {
     /** EditText containing a chat message */
     EditText chatMsg;
 
+    Bundle b;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_micro_details);
+        setContentView(R.layout.micro_fragment);
 
-        // set the message text
-        Intent i = getIntent(); // the Intent passed from NearMicrowave
-        microId = i.getExtras().getLong("microId");
-        microText = i.getExtras().getString("microText");
-        microDetail = (TextView) findViewById(R.id.msgText);
-        microDetail.setText(microText);
-        //a = new ArrayAdapter<String>(MicroDetails.this, android.R.layout.simple_list_item_1, microChatMsgs);
+        // Get the params from the Intent bundle
+        b = this.getIntent().getExtras();
+        microId = b.getLong("microID");
+        microText = b.getString("microText");
 
-        // Set the progress bar to 0% and make it invisible
-        progressBar = (ProgressBar) findViewById(R.id.chatProgress);
-        progressBar.setProgress(0);
-        progressBar.setVisibility(ProgressBar.INVISIBLE);
-
-        // set up the ListView and ArrayList
-        chatMsgs = (ListView) findViewById(R.id.chatMsgs);
-        microChatMsgs = new ArrayList<>();
-
-        // Run the AsyncTask that downloads chat messages
-        ChatLog chatlog = new ChatLog();
-        chatlog.execute(chatURL);
-
-        // enable the Delete button
-        deleteMsgButton = (Button) findViewById(R.id.microDelButton);
-        deleteMsgButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteDialog();
-            }
-        });
-
-        // enable the "Send a Message" button
-        chatButton = (Button) findViewById(R.id.chatButton);
-        chatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                makeChatDialog();
-            }
-        });
-    }
-
-    // create an AlertDialog for deleting the microwave
-    public void deleteDialog() {
-        AlertDialog.Builder d = new AlertDialog.Builder(this);
-        d.setTitle(R.string.delMicroTitle)
-                .setMessage("This can't be undone.")
-                .setPositiveButton(R.string.delMicroOK, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // OK was clicked; return to NearMicrowave and delete the microwave
-                        Intent returnIntent = new Intent();
-                        returnIntent.putExtra("microId", microId);
-                        setResult(RESULT_OK, returnIntent);
-                        finish();
-                    }
-                })
-                .setNegativeButton(R.string.delMicroCancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Cancel was clicked; do nothing
-                    }
-                 })
-                .create()
-                .show();
-    }
-
-    // create the message custom dialog
-    public void makeChatDialog() {
-        AlertDialog.Builder b = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        final View v = inflater.inflate(R.layout.dialog_micro_chat, null);
-        chatName = (EditText) v.findViewById(R.id.chatNameEdit);
-        chatMsg = (EditText) v.findViewById(R.id.chatMsgEdit);
-
-        b.setView(v)
-                .setTitle("Send a Message")
-                .setPositiveButton(R.string.microSendBtn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // add the message to the chat window
-                        microChatMsgs.add(chatName.getText().toString());
-                        microChatMsgs.add(chatMsg.getText().toString());
-                        a.notifyDataSetChanged();
-                        // notify the user with a Toast
-                        Toast msgToast = Toast.makeText(v.getContext(), "Message sent!", Toast.LENGTH_SHORT);
-                        msgToast.show();
-                    }
-
-                })
-                .setNegativeButton(R.string.microCancelBtn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // just cancel
-                    }
-                })
-                .create()
-                .show();
+        // show the fragment
+        MicrowaveFragment micro = new MicrowaveFragment();
+        micro.setArguments(b);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.microDetailsFrame, micro)
+                .commit();
     }
 
 
-    /**
-     * This inner class is an AsyncTask that grabs an XML file simulating "chat" messages from my
-     * Web site and populates the chat ListView with them.
-     * @author    Scott McClare
-     * @version   1.0.0 April 20, 2017
-     * @since 1.8.0_112
-     */
-    public class ChatLog extends AsyncTask<String, Integer, String> {
-
-        /** Integer for filling in the progress bar as the data loads */
-        int progress = 0;
-
-        protected String doInBackground(String ... s) {
-
-            try {
-                // Open up a connection to the Web site with the chat simulator
-                URL url = new URL(s[0]);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(20000);
-                conn.setConnectTimeout(30000);
-                conn.setRequestMethod("GET");
-                conn.setDoInput(true);
-
-                // Start the query
-                conn.connect();
-                XmlPullParser parser = Xml.newPullParser();
-                parser.setInput(conn.getInputStream(), null);
-                parser.nextTag();
-                // Pass the query to the readChat method
-                readChat(parser);
-            } catch (Exception ex) {
-                Log.d(ACTIVITY_NAME, Log.getStackTraceString(ex));
-            }
-
-            return "done";
-        }
-
-        /**
-         * Update the progress bar
-         * @param p Progress percentage as passed from readChat()
-         */
-        protected void onProgressUpdate(Integer ... p) {
-            progressBar.setVisibility(ProgressBar.VISIBLE);
-            progressBar.setProgress(p[0]);
-        }
-
-        /**
-         * Hide the progress bar after the download is done, and populate the chat window with
-         * messages
-         * @param s The string passed from doInBackground() upon completion
-         */
-        protected void onPostExecute(String s) {
-            if (s.equals("done")) {
-                // hide the progress bar
-                progressBar.setVisibility(ProgressBar.INVISIBLE);
-
-                // Show the messages
-                a = new ArrayAdapter<String>(MicroDetails.this, android.R.layout.simple_list_item_1, microChatMsgs);
-                chatMsgs.setAdapter(a);
-            }
-        }
-        /**
-         * Check the XML for the name and message attributes of each chat message, and add them to
-         * the ArrayList
-         * @param parser The XmlPullParser from doInBackground
-         * @throws XmlPullParserException
-         * @throws IOException
-         * @throws InterruptedException
-         */
-        private void readChat(XmlPullParser parser)
-        throws XmlPullParserException, IOException, InterruptedException {
-            parser.require(XmlPullParser.START_TAG, null, null);
-            while (parser.next() != XmlPullParser.END_DOCUMENT) {
-                if (parser.getEventType() != XmlPullParser.START_TAG) {
-                    continue;
-                }
-                String tag = parser.getName();
-                if (tag.equals("name")) {
-                    microChatMsgs.add(parser.nextText());
-                    publishProgress(progress += 9);
-                }
-                if (tag.equals("message")) {
-                    microChatMsgs.add(parser.nextText());
-                    publishProgress(progress += 9);
-                }
-                // update the progress bar
-                Thread.sleep(100);
-            }
-            // Load completed - set the progress bar to 100%
-            publishProgress(100);
-        }
-
-    } // end of inner class ChatLog
-
-} // end of outer class MicroDetails
+    } // end of outer class MicroDetails
