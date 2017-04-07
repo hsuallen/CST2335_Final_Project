@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:paddingTop="16dp"
         android:gravity="center"
-        android:text="@string/enter_new_classroom"
+        android:text="@string/enter_new_building"
         android:textColor="#444"
         android:textSize="20dp" />
     <EditText
@@ -24,7 +24,7 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        android:hint="@string/classroom" />
+        android:hint="@string/building" />
     <EditText
         android:id="@+id/editText2"
         android:layout_width="match_parent"

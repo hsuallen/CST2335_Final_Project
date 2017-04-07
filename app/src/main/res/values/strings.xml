@@ -11,12 +11,15 @@
     <string name="deleteButton">Delete</string>
     <string name="refreshButton">Refresh Data</string>
 
-    <!-- Classroom Related Strings -->
-    <string name="add_classroom">Add Classroom</string>
-    <string name="classroom">Classroom</string>
+    <!-- Buildings Related Strings -->
+    <string name="add_building">Add Building</string>
+    <string name="delete_building">Delete</string>
+    <string name="edit_building">Edit</string>
+    <string name="building">Building</string>
     <string name="description">Description</string>
-    <string name="enter_new_classroom">Enter a new classroom:</string>
-    <string name="list_of_classrooms">List of classrooms</string>
+    <string name="enter_new_building">Enter a new building:</string>
+    <string name="list_of_buildings">List of buildings</string>
+    <string name="pick_floor">Pick a floor:</string>
 
     <!-- Main Activity Strings -->
     <string name="main_welcome">Welcome to Algonquin Amenities Finder!</string>

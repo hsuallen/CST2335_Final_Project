@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,17 +27,22 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class NearVendingActivity extends AppCompatActivity {
+    public static final int EDIT_BUILDING = 2;
+    public static final int DELETE_BUILDING = 5;
+
     protected final String ACTIVITY_NAME = "MainActivity";
-    protected ArrayList<Classroom> classrooms = new ArrayList<>();
-    protected ClassroomAdapter adapter;
+    protected ArrayList<Building> buildings = new ArrayList<>();
+    protected boolean isTablet = false;
+    protected BuildingAdapter adapter;
     protected Cursor cursor;
+    protected int pos;
     protected SQLiteDatabase db;
 
-    protected class ClassroomAdapter extends ArrayAdapter<Classroom> {
-        public ClassroomAdapter(Context ctx) { super(ctx, 0); }
+    protected class BuildingAdapter extends ArrayAdapter<Building> {
+        public BuildingAdapter(Context ctx) { super(ctx, 0); }
 
-        public int getCount() { return classrooms.size(); }
-        public Classroom getItem(int pos) { return classrooms.get(pos); }
+        public int getCount() { return buildings.size(); }
+        public Building getItem(int pos) { return buildings.get(pos); }
         public View getView(int pos, View convertView, ViewGroup Parent) {
             LayoutInflater inflater = NearVendingActivity.this.getLayoutInflater();
 
@@ -45,30 +51,46 @@ public class NearVendingActivity extends AppCompatActivity {
 
             TextView classroom = (TextView)result.findViewById(R.id.textView2);
             TextView description = (TextView)result.findViewById(R.id.textView3);
-            classroom.setText(getItem(pos).getClassroom());
+            classroom.setText(getItem(pos).getBuilding());
             description.setText(getItem(pos).getDescription());
             return result;
         }
 
         public long getItemId(int pos) {
             cursor.moveToPosition(pos);
-            long id = cursor.getLong(cursor.getColumnIndex(ClassroomDatabaseHelper.KEY_ID));
+            long id = cursor.getLong(cursor.getColumnIndex(BuildingDatabaseHelper.KEY_ID));
             return id;
         }
     }
 
-    private class Classroom {
-        private String classroom, description;
+    private class Building {
+        private String building, description;
 
-        public Classroom(String classroom, String description) {
-            this.classroom = classroom;
+        public Building(String classroom, String description) {
+            this.building = classroom;
             this.description = description;
         }
 
-        public void setClassroom(String classroom) { this.classroom = classroom; }
+        public void setClassroom(String classroom) { this.building = classroom; }
         public void setDescription(String description) { this.description = description; }
-        public String getClassroom() { return this.classroom; }
+        public String getBuilding() { return this.building; }
         public String getDescription() { return this.description; }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        long id;
+        if (resultCode == DELETE_BUILDING) {
+            id = data.getLongExtra("ID", 0);
+            deleteClassroom(id);
+            View root = findViewById(R.id.parent_root);
+            genericFunctions.createSnackbar(root, "Class deleted.", Snackbar.LENGTH_LONG);
+        } else if (resultCode == EDIT_BUILDING) {
+            id = data.getLongExtra("ID", 0);
+            String room = data.getStringExtra("class");
+            String desc = data.getStringExtra("desc");
+            editClassroom(id, room, desc);
+        }
     }
 
     @Override
@@ -76,20 +98,17 @@ public class NearVendingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_vending);
 
-        ClassroomDatabaseHelper c = new ClassroomDatabaseHelper(this);
+        BuildingDatabaseHelper c = new BuildingDatabaseHelper(this);
         db = c.getWritableDatabase();
 
         try {
-            cursor = db.query(ClassroomDatabaseHelper.name, new String[]{ClassroomDatabaseHelper.KEY_ROOM,
-                            ClassroomDatabaseHelper.KEY_DESCRIPTION, ClassroomDatabaseHelper.KEY_ID},null, null,
-                    null, null, null);
-            cursor.moveToFirst();
+            updateCursor();
             int columns = cursor.getColumnCount();
 
             while (!cursor.isAfterLast()) {
-                String room = cursor.getString(cursor.getColumnIndex(ClassroomDatabaseHelper.KEY_ROOM));
-                String desc = cursor.getString(cursor.getColumnIndex(ClassroomDatabaseHelper.KEY_DESCRIPTION));
-                classrooms.add(new Classroom(room, desc));
+                String building = cursor.getString(cursor.getColumnIndex(BuildingDatabaseHelper.KEY_BUILDING));
+                String desc = cursor.getString(cursor.getColumnIndex(BuildingDatabaseHelper.KEY_DESCRIPTION));
+                buildings.add(new Building(building, desc));
                 cursor.moveToNext();
             }
 
@@ -101,7 +120,7 @@ public class NearVendingActivity extends AppCompatActivity {
             Button add = (Button)findViewById(R.id.button3);
             ListView list = (ListView)findViewById(R.id.listview);
 
-            adapter = new ClassroomAdapter(this);
+            adapter = new BuildingAdapter(this);
             list.setAdapter(adapter);
 
             add.setOnClickListener(new View.OnClickListener() {
@@ -114,10 +133,31 @@ public class NearVendingActivity extends AppCompatActivity {
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Log.i(ACTIVITY_NAME, "Something");
+                    Bundle bundle = new Bundle();
+                    String building = cursor.getString(cursor.getColumnIndex(BuildingDatabaseHelper.KEY_BUILDING));
+                    String desc = cursor.getString(cursor.getColumnIndex(BuildingDatabaseHelper.KEY_DESCRIPTION));
+                    Log.i(ACTIVITY_NAME, "Building: " + building + ", Fullname: " + desc);
+                    bundle.putLong("ID", id);
+                    bundle.putString("building", building);
+                    bundle.putString("description", desc);
+
+                    pos = position;
+                    Log.i(ACTIVITY_NAME, "Current position: " + pos);
+
+                    if (isTablet) {
+                    } else {
+                        Intent intent = new Intent(NearVendingActivity.this, BuildingDetails.class);
+                        intent.putExtra("ID", id);
+                        intent.putExtra("building", building);
+                        intent.putExtra("description", desc);
+                        intent.putExtra("isTablet", isTablet);
+                        startActivityForResult(intent, 5, bundle);
+                    }
                 }
             });
         } catch (Exception e) { Log.e("Exception: ", e.getMessage()); }
+
+        isTablet = (findViewById(R.id.frameLayout) != null);
     }
 
     @Override
@@ -134,11 +174,70 @@ public class NearVendingActivity extends AppCompatActivity {
             case R.id.action_help:
                 // TODO: add a snackbar here
                 break;
-            case R.id.action_home:
-                finish();
-                break;
+            case R.id.action_home: finish(); break;
         }
         return true;
+    }
+
+    public void editClassroom(long id, String room, String desc) {
+        ContentValues cv = new ContentValues();
+
+        Building newBuilding = new Building(room, desc);
+        buildings.set(pos, newBuilding);
+        cv.put(BuildingDatabaseHelper.KEY_BUILDING, room);
+        cv.put(BuildingDatabaseHelper.KEY_DESCRIPTION, desc);
+        db.update(BuildingDatabaseHelper.name, cv, BuildingDatabaseHelper.KEY_ID + "=" + id, null);
+        updateCursor();
+        adapter.notifyDataSetChanged();
+    }
+
+    public void deleteClassroom(long id) {
+        db.delete(BuildingDatabaseHelper.name, BuildingDatabaseHelper.KEY_ID + "=" + id, null);
+//        updateCursor();
+        adapter.remove(adapter.getItem(pos));
+        buildings.remove(pos);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void addClassroom(String room, String desc) {
+        ContentValues cv = new ContentValues();
+
+        buildings.add(new Building(room, desc));
+        cv.put(BuildingDatabaseHelper.KEY_BUILDING, room);
+        cv.put(BuildingDatabaseHelper.KEY_DESCRIPTION, desc);
+        db.insert(BuildingDatabaseHelper.name, "Null replacement value", cv);
+        updateCursor();
+        adapter.notifyDataSetChanged();
+    }
+
+    private void customDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View dialog = inflater.inflate(R.layout.allen_classroom_input, null);
+
+        builder.setView(dialog);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Dialog d = (Dialog)dialog;
+                EditText room = (EditText)d.findViewById(R.id.editText1);
+                EditText desc = (EditText)d.findViewById(R.id.editText2);
+                addClassroom(room.getText().toString(), desc.getText().toString());
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+
+        builder.create().show();
+    }
+
+    private void updateCursor() {
+        cursor = db.query(BuildingDatabaseHelper.name, new String[]{BuildingDatabaseHelper.KEY_BUILDING,
+                        BuildingDatabaseHelper.KEY_DESCRIPTION, BuildingDatabaseHelper.KEY_ID},null, null,
+                null, null, null);
+        cursor.moveToFirst();
     }
 
     protected void onResume() {
@@ -164,37 +263,5 @@ public class NearVendingActivity extends AppCompatActivity {
     protected void onDestroy() {
         Log.i(ACTIVITY_NAME, "In onDestroy()");
         super.onDestroy();
-    }
-
-    private void customDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-
-        View dialog = inflater.inflate(R.layout.allen_classroom_input, null);
-
-        builder.setView(dialog);
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                Dialog d = (Dialog)dialog;
-                EditText room = (EditText)d.findViewById(R.id.editText1);
-                EditText desc = (EditText)d.findViewById(R.id.editText2);
-
-                ContentValues cv = new ContentValues();
-
-                String Room = room.getText().toString();
-                String Desc = desc.getText().toString();
-                classrooms.add(new Classroom(Room, Desc));
-                cv.put(ClassroomDatabaseHelper.KEY_ROOM, Room);
-                cv.put(ClassroomDatabaseHelper.KEY_DESCRIPTION, Desc);
-                db.insert(ClassroomDatabaseHelper.name, "Null replacement value", cv);
-                adapter.notifyDataSetChanged();
-            }
-        });
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-            }
-        });
-
-        builder.create().show();
     }
 }

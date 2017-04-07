@@ -12,6 +12,7 @@
     tools:context="com.example.nothi.androidamenities.NearVendingActivity">
 
     <LinearLayout
+        android:id="@+id/parent_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -24,7 +25,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="@string/list_of_classrooms" />
+            android:text="@string/list_of_buildings" />
 
         <ListView
             android:id="@+id/listview"
@@ -32,14 +33,15 @@
             android:layout_height="382dp"
             android:layout_above="@+id/editText1"
             android:layout_below="@+id/textView"
-            android:layout_weight="0.51"></ListView>
+            android:layout_weight="0.51"
+            android:background="@android:color/background_light"></ListView>
     </LinearLayout>
 
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_classroom"
+        android:text="@string/add_building"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/editText1"
