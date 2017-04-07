@@ -46,7 +46,7 @@ public class NearVendingActivity extends AppCompatActivity {
         public View getView(int pos, View convertView, ViewGroup Parent) {
             LayoutInflater inflater = NearVendingActivity.this.getLayoutInflater();
 
-            int layout = R.layout.classroom_row;
+            int layout = R.layout.building_row;
             View result = inflater.inflate(layout, null);
 
             TextView classroom = (TextView)result.findViewById(R.id.textView2);
@@ -98,6 +98,8 @@ public class NearVendingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_vending);
 
+        getSupportActionBar().setTitle("List of Buildings");
+
         BuildingDatabaseHelper c = new BuildingDatabaseHelper(this);
         db = c.getWritableDatabase();
 
@@ -146,11 +148,12 @@ public class NearVendingActivity extends AppCompatActivity {
 
                     if (isTablet) {
                     } else {
-                        Intent intent = new Intent(NearVendingActivity.this, BuildingDetails.class);
+                        Intent intent = new Intent(NearVendingActivity.this, Transaction.class);
                         intent.putExtra("ID", id);
                         intent.putExtra("building", building);
                         intent.putExtra("description", desc);
                         intent.putExtra("isTablet", isTablet);
+                        intent.putExtra("fragType", "building");
                         startActivityForResult(intent, 5, bundle);
                     }
                 }

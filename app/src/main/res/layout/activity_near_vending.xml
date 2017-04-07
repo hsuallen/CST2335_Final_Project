@@ -25,7 +25,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="@string/list_of_buildings" />
+            android:text="@string/pick_a_building" />
 
         <ListView
             android:id="@+id/listview"

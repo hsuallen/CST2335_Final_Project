@@ -37,7 +37,7 @@
             android:name=".NearestinTech"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".help_vending" />
-        <activity android:name=".BuildingDetails"></activity>
+        <activity android:name=".Transaction" />
     </application>
 
 </manifest>

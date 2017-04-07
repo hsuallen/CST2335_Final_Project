@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().setTitle("FtM?");
+
 //        coordInput = (EditText) findViewById(R.id.coordinateInput);
 
         sharedInfo = getSharedPreferences("userInfoKey1", Context.MODE_PRIVATE);

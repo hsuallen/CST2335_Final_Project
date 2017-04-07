@@ -1,18 +1,16 @@
 package com.example.nothi.androidamenities;
 
-import android.app.Dialog;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -89,6 +87,19 @@ public class BuildingFragment extends Fragment {
 
             ListView listView = (ListView)gui.findViewById(R.id.listView2);
             listView.setAdapter(adapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (isTablet) {
+                    } else {
+                        Intent intent = new Intent(getActivity(), Transaction.class);
+                        intent.putExtra("fragType", "floor");
+
+                        startActivityForResult(intent, 5);
+                    }
+                }
+            });
         }
 
         protected void onProgressUpdate(Integer ...value) {
@@ -112,17 +123,11 @@ public class BuildingFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        gui = inflater.inflate(R.layout.classroom_details_layout, null);
+        gui = inflater.inflate(R.layout.building_details_layout, null);
 
         progressBar = (ProgressBar)gui.findViewById(R.id.progressBar);
         q = new Query();
         q.execute(url);
-
-//        String lst[] = new String[]{"test", "haha", "James"};
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(gui.getContext(),
-//                R.layout.floor_row, lst);
-//        ListView lv = (ListView)gui.findViewById(R.id.listView2);
-//        lv.setAdapter(adapter);
 
         classroomTV = (TextView)gui.findViewById(R.id.textView9);
         classroomTV.setText(classroomStr);
