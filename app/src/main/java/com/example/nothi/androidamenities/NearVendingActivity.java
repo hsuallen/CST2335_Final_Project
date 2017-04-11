@@ -147,6 +147,9 @@ public class NearVendingActivity extends AppCompatActivity {
                     Log.i(ACTIVITY_NAME, "Current position: " + pos);
 
                     if (isTablet) {
+                        BuildingFragment fragment = new BuildingFragment();
+                        fragment.setArguments(bundle);
+                        getFragmentManager().beginTransaction().replace(R.id.frameLayout, fragment).commit();
                     } else {
                         Intent intent = new Intent(NearVendingActivity.this, Transaction.class);
                         intent.putExtra("ID", id);

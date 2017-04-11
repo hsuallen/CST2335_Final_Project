@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -26,6 +29,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by allenhsu on 2017-04-04.
@@ -33,17 +37,28 @@ import java.util.ArrayList;
 
 public class BuildingFragment extends Fragment {
     protected boolean isTablet;
-    protected int resultCode = 0;
     protected long id;
     protected ProgressBar progressBar;
-    protected String classroomStr, descriptionStr, url;
+    protected String buildingStr, descriptionStr, url;
     protected TextView classroomTV, descriptionTV;
     protected View gui;
-    private int nFloor;
+    private HashMap<String, Integer> buildingFloors;
     private Query q;
 
-    class Query extends AsyncTask<String, Integer, String> {
+    class BuildingFloor {
+        String building;
+        int floors;
 
+        BuildingFloor(String building, int floors) {
+            this.building = building;
+            this.floors = floors;
+        }
+
+        public String getBuilding() { return building; }
+        public int getFloors() { return floors; }
+    }
+
+    class Query extends AsyncTask<String, Integer, String> {
         protected String doInBackground(String ... args) {
             InputStream in = null;
             try {
@@ -65,8 +80,9 @@ public class BuildingFragment extends Fragment {
                     if (parser.getEventType() != XmlPullParser.START_TAG) continue;
 
                     String name = parser.getName();
-                    if (name.equals("floors")) {
-                        nFloor = Integer.parseInt(parser.getAttributeValue(null, "number_of_floors"));
+                    if (name != "entry") {
+                        int nFloor = Integer.parseInt(parser.getAttributeValue(null, "floors"));
+                        buildingFloors.put(name, nFloor);
                     }
                 }
             } catch (XmlPullParserException p) {
@@ -80,7 +96,9 @@ public class BuildingFragment extends Fragment {
             progressBar.setVisibility(View.INVISIBLE);
 
             ArrayList<String> floors = new ArrayList<>();
-            for (int i = 0; i < nFloor; i++) floors.add("Floor " + (i + 1));
+            for (int i = 0; i < buildingFloors.get(buildingStr); i++) {
+                floors.add("Floor " + (i + 1));
+            }
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(gui.getContext(),
                     R.layout.floor_row, floors);
@@ -113,8 +131,10 @@ public class BuildingFragment extends Fragment {
         super.onCreate(bundle);
         Bundle bun = getArguments();
 
+        buildingFloors = new HashMap<>();
+
         id = bun.getLong("ID");
-        classroomStr = bun.getString("building");
+        buildingStr = bun.getString("building");
         descriptionStr = bun.getString("description");
         isTablet = bun.getBoolean("isTablet");
 
@@ -125,12 +145,14 @@ public class BuildingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         gui = inflater.inflate(R.layout.building_details_layout, null);
 
+        Toast.makeText(gui.getContext(), "Fetching floors...", Toast.LENGTH_SHORT).show();
+
         progressBar = (ProgressBar)gui.findViewById(R.id.progressBar);
         q = new Query();
         q.execute(url);
 
         classroomTV = (TextView)gui.findViewById(R.id.textView9);
-        classroomTV.setText(classroomStr);
+        classroomTV.setText(buildingStr);
 
         descriptionTV = (TextView)gui.findViewById(R.id.textView10);
         descriptionTV.setText(String.valueOf(descriptionStr));
@@ -167,7 +189,7 @@ public class BuildingFragment extends Fragment {
         View dialog = inflater.inflate(R.layout.allen_classroom_input, null);
         final EditText room = (EditText)dialog.findViewById(R.id.editText1);
         final EditText desc = (EditText)dialog.findViewById(R.id.editText2);
-        room.setText(classroomStr);
+        room.setText(buildingStr);
         desc.setText(descriptionStr);
 
         builder.setView(dialog);
@@ -176,7 +198,7 @@ public class BuildingFragment extends Fragment {
                 String classroom = room.getText().toString();
                 String description = desc.getText().toString();
 
-                classroomStr = classroom;
+                buildingStr = classroom;
                 descriptionStr = description;
                 classroomTV.setText(classroom);
                 descriptionTV.setText(description);

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Amenities</string>
+
+    <!-- Activity Titles -->
+    <string name="title_activity_near_female_washroom">NearFemaleWashroomActivity</string>
+    <string name="title_activity_microwave">MicrowaveActivity</string>
+
+    <!-- Buttons -->
+    <string name="addButton">添加</string>
+    <string name="deleteButton">刪除</string>
+    <string name="refreshButton">重新整理</string>
+
+    <!-- Buildings Related Strings -->
+    <string name="add_building">添加建築</string>
+    <string name="delete_building">刪除</string>
+    <string name="building">建築</string>
+    <string name="description">說明</string>
+    <string name="edit_building">編輯</string>
+    <string name="enter_new_building">醒:</string>
+    <string name="floor_description">Here you can find a list of vending machines:</string>
+    <string name="pick_a_building">請選擇建築:</string>
+    <string name="pick_floor">請選擇樓層:</string>
+
+    <!-- Main Activity Strings -->
+    <string name="main_welcome">歡迎來到微波爐在哪？!</string>
+    <string name="main_begin">請選擇工具欄上的一個圖標。每個圖標代表微波爐、販買機、印表機、和盥洗室。</string>
+    <string name="main_about">This app is created for the purpose of CST2335 final project. It is a
+    collaboration project between Allen Hsu, Scott McClare, Wei Cui, and Jacob Heaton.</string>
+
+    <!-- Microwave Related Strings -->
+    <string name="addMicrowaveHint">添加微波爐</string>
+    <string name="microwaveHeading">Here\'s where you can find a microwave:</string>
+    <string name="microDelText">刪除微波爐</string>
+
+    <!-- Miscellaneous Strings -->
+    <string name="cancel">取消</string>
+    <string name="messageTitleText">訊息:</string>
+    <string name="ok">確認</string>
+</resources>

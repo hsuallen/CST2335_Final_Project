@@ -4,7 +4,6 @@
     <!-- Activity Titles -->
     <string name="title_activity_near_female_washroom">NearFemaleWashroomActivity</string>
     <string name="title_activity_microwave">MicrowaveActivity</string>
-    <string name="title_activity_test_tool_bar">Test</string>
 
     <!-- Buttons -->
     <string name="addButton">Add</string>
@@ -14,15 +13,16 @@
     <!-- Buildings Related Strings -->
     <string name="add_building">Add Building</string>
     <string name="delete_building">Delete</string>
-    <string name="edit_building">Edit</string>
     <string name="building">Building</string>
     <string name="description">Description</string>
+    <string name="edit_building">Edit</string>
     <string name="enter_new_building">Enter a new building:</string>
+    <string name="floor_description">Here you can find a list of vending machines:</string>
     <string name="pick_a_building">Pick a building:</string>
     <string name="pick_floor">Pick a floor:</string>
 
     <!-- Main Activity Strings -->
-    <string name="main_welcome">Welcome to Algonquin Amenities Finder!</string>
+    <string name="main_welcome">Welcome to Where\'s the Microwave?!</string>
     <string name="main_begin">To start out, choose one of the icons at the top. Each of the icons
     represent microwaves, vending machines, printers, and washrooms in the order from left to right.</string>
     <string name="main_about">This app is created for the purpose of CST2335 final project. It is a
