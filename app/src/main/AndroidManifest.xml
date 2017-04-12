@@ -37,6 +37,11 @@
             android:name=".NearestinTech"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".help_vending" />
+        <activity android:name=".Transaction" />
+        <activity
+            android:name=".MicroHelp"
+            android:label="@string/title_activity_micro_help"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

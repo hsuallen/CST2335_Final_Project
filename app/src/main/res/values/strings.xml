@@ -11,11 +11,15 @@
     <string name="deleteButton">Delete</string>
     <string name="refreshButton">Refresh Data</string>
 
-    <!-- Classroom Related Strings -->
-    <string name="add">add</string>
-    <string name="classroom">Classroom</string>
+    <!-- Buildings Related Strings -->
+    <string name="add_building">Add Building</string>
+    <string name="delete_building">Delete</string>
+    <string name="edit_building">Edit</string>
+    <string name="building">Building</string>
     <string name="description">Description</string>
-    <string name="list_of_classrooms">List of classrooms</string>
+    <string name="enter_new_building">Enter a new building:</string>
+    <string name="pick_a_building">Pick a building:</string>
+    <string name="pick_floor">Pick a floor:</string>
 
     <!-- Main Activity Strings -->
     <string name="main_welcome">Welcome to Algonquin Amenities Finder!</string>
@@ -38,7 +42,15 @@
     <string name="delMicroOK">Delete</string>
     <string name="delMicroCancel">Cancel</string>
     <string name="delMicroSnackbar">Microwave deleted!</string>
+    <string name="microHelpTitle">Microwave Help</string>
+    <string name="microHelp">Each item in this list represents a microwave oven and its location on
+    campus. Click a listing for more information.\n\nA new view will appear that will allow you to
+    delete this microwave from your list, read text messages about the microwave that other students
+    have left, or send a message of your own.</string>
 
     <!-- Miscellaneous Strings -->
+    <string name="cancel">Cancel</string>
     <string name="messageTitleText">Messages:</string>
+    <string name="ok">Ok</string>
+    <string name="title_activity_micro_help">MicroHelp</string>
 </resources>

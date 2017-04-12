@@ -19,6 +19,8 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -181,6 +183,19 @@ public class NearMicrowave extends AppCompatActivity {
         microwaves.add("D Building - in main cafeteria");
         microwaves.add("T Building - near T119");
         microwaves.add("E Building - vending machine room on 2nd floor");
+    }
+
+    public boolean onCreateOptionsMenu(Menu m) {
+        getMenuInflater().inflate(R.menu.micro_toolbar, m);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem mi) {
+        if ( mi.getItemId() == R.id.action_micro_help) {
+            Intent intent = new Intent(NearMicrowave.this, MicroHelp.class);
+            startActivity(intent);
+        }
+        return true;
     }
 
 
