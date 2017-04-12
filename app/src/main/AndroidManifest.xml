@@ -38,6 +38,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".help_vending" />
         <activity android:name=".Transaction" />
+        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>

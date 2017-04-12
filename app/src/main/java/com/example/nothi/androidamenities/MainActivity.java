@@ -5,14 +5,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.lang.reflect.Method;
 
 public class MainActivity extends AppCompatActivity {
     protected static final String ACTIVITY_NAME = "OptionsActivity";
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().setTitle("FtM?");
+        getSupportActionBar().setTitle("Where's the Microwave?");
 
 //        coordInput = (EditText) findViewById(R.id.coordinateInput);
 
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu m) {
-        getMenuInflater().inflate(R.menu.toolbar_menu, m);
+        getMenuInflater().inflate(R.menu.toolbar_menu_colour, m);
         return true;
     }
 
@@ -48,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         int id = mi.getItemId();
 
         switch(id) {
+            case R.id.action_zero:
+                startActivity(new Intent(MainActivity.this, Settings.class));
+                break;
             case R.id.action_one:
                 startActivity(new Intent(MainActivity.this, NearMicrowave.class));
                 break;
@@ -63,8 +67,32 @@ public class MainActivity extends AppCompatActivity {
 //                findnearPrinter.putExtra("Coordkey", dfCoordInput);
                 startActivity(new Intent(MainActivity.this, NearPrinterActivity.class));
                 break;
+            case R.id.action_four:
+                break;
         }
         return true;
+    }
+
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu)
+    {
+        if(featureId == Window.FEATURE_ACTION_BAR && menu != null){
+            if(menu.getClass().getSimpleName().equals("MenuBuilder")){
+                try{
+                    Method m = menu.getClass().getDeclaredMethod(
+                            "setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                }
+                catch(NoSuchMethodException e){
+//                    Log.e(TAG, "onMenuOpened", e);
+                }
+                catch(Exception e){
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return super.onMenuOpened(featureId, menu);
     }
 
     @Override
