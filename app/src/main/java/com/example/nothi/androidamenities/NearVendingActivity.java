@@ -7,10 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -98,7 +102,10 @@ public class NearVendingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_vending);
 
-        getSupportActionBar().setTitle("List of Buildings");
+        String str = "List of Buildings";
+//        SpannableString title = new SpannableString(str);
+//        title.setSpan(new ForegroundColorSpan(Color.BLACK), 0, str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getSupportActionBar().setTitle(str);
 
         BuildingDatabaseHelper c = new BuildingDatabaseHelper(this);
         db = c.getWritableDatabase();
