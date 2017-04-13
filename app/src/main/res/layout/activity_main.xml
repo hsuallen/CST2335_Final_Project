@@ -32,11 +32,16 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.92"
             android:gravity="top|center"
             android:text="@string/main_begin"
             android:textColor="#666"
             android:textSize="15sp" />
+
+        <ListView
+            android:id="@+id/listView4"
+            android:layout_width="match_parent"
+            android:layout_height="347dp"
+            android:layout_weight="1.02" />
 
         <TextView
             android:id="@+id/textView4"
@@ -47,24 +52,6 @@
             android:text="@string/main_about"
             android:textColor="#888"
             android:textSize="14sp" />
-
-
-        <!--<TextView
-            android:text="PlEnter coordinates 60x100(floor 1-3, x, y):"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView4"
-            android:layout_weight="0.03"
-            android:textSize="24sp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/coordinateInput"
-            android:layout_weight="0.03"
-            android:text="example: 1, 40, 57" /> -->
 
     </LinearLayout>
 

@@ -138,7 +138,7 @@ public class BuildingFragment extends Fragment {
         descriptionStr = bun.getString("description");
         isTablet = bun.getBoolean("isTablet");
 
-        url = "http://algonquinstudents.ca/~hsu00016/android/B_school_of_business.xml";
+        url = "http://algonquinstudents.ca/~hsu00016/android/list_of_buildings.xml";
     }
 
     @Override

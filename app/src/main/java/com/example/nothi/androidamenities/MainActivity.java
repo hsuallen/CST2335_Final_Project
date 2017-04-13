@@ -3,26 +3,81 @@ package com.example.nothi.androidamenities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     protected static final String ACTIVITY_NAME = "OptionsActivity";
+    private ArrayList<ActivityRow> activities = new ArrayList<>();
     private EditText coordInput;
+
+    // activities and icons associated with them
+    private final String[] titles = new String[]{"Microwaves", "Vending Machines", "Printers",
+            "Washrooms"};
+    private final Integer[] icons = new Integer[]{R.drawable.microwave_colour,
+            R.drawable.vending_machine_colour, R.drawable.printer_colour, R.drawable.toilet_colour};
+    private final Class destinations[] = new Class[]{NearMicrowave.class, NearVendingActivity.class,
+            NearPrinterActivity.class, MainActivity.class};
 
     //store and edit information
     SharedPreferences sharedInfo;
     //first para, name of preference's file
     SharedPreferences.Editor editallInfo;
+
+    protected class ActivitiesAdapter extends ArrayAdapter<ActivityRow> {
+        public ActivitiesAdapter(Context ctx, int resource, List<ActivityRow> objects) {
+            super(ctx, resource, objects);
+        }
+
+        public View getView(int pos, View convertView, ViewGroup Parent) {
+            LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+
+            int layout = R.layout.activities_row;
+            View result = inflater.inflate(layout, null);
+
+            TextView title = (TextView)result.findViewById(R.id.textView15);
+            ImageView icon = (ImageView)result.findViewById(R.id.imageView);
+            title.setText(getItem(pos).getTitle());
+            icon.setImageResource(getItem(pos).getIcon());
+
+            return result;
+        }
+    }
+
+    protected class ActivityRow {
+        private int iconID;
+        private String title;
+
+        public ActivityRow(int iconID, String title) {
+            this.iconID = iconID;
+            this.title = title;
+        }
+
+        public int getIcon() { return iconID; }
+        public String getTitle() {return title; }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +85,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().setTitle("Where's the Microwave?");
+
+        for (int i = 0; i < titles.length; i++) activities.add(new ActivityRow(icons[i], titles[i]));
+        ListView listView = (ListView)findViewById(R.id.listView4);
+        ActivitiesAdapter adapter = new ActivitiesAdapter(this, R.layout.activities_row, activities);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, destinations[position]);
+                startActivity(intent);
+            }
+        });
+
 
 //        coordInput = (EditText) findViewById(R.id.coordinateInput);
 
@@ -40,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu m) {
-        getMenuInflater().inflate(R.menu.toolbar_menu_colour, m);
+        getMenuInflater().inflate(R.menu.main_menu, m);
         return true;
     }
 
@@ -52,47 +121,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_zero:
                 startActivity(new Intent(MainActivity.this, Settings.class));
                 break;
-            case R.id.action_one:
-                startActivity(new Intent(MainActivity.this, NearMicrowave.class));
-                break;
-            case R.id.action_two:
-                startActivity(new Intent(MainActivity.this, NearVendingActivity.class));
-                break;
-            case R.id.action_three:
-//                String dfCoordInput= (String)  coordInput.getText().toString();
-//
-//                Log.i("Coordinate input is ", dfCoordInput);
-//
-//                Intent findnearPrinter = new Intent(MainActivity.this, NearPrinterActivity.class);
-//                findnearPrinter.putExtra("Coordkey", dfCoordInput);
-                startActivity(new Intent(MainActivity.this, NearPrinterActivity.class));
-                break;
-            case R.id.action_four:
-                break;
         }
         return true;
-    }
-
-    @Override
-    public boolean onMenuOpened(int featureId, Menu menu)
-    {
-        if(featureId == Window.FEATURE_ACTION_BAR && menu != null){
-            if(menu.getClass().getSimpleName().equals("MenuBuilder")){
-                try{
-                    Method m = menu.getClass().getDeclaredMethod(
-                            "setOptionalIconsVisible", Boolean.TYPE);
-                    m.setAccessible(true);
-                    m.invoke(menu, true);
-                }
-                catch(NoSuchMethodException e){
-//                    Log.e(TAG, "onMenuOpened", e);
-                }
-                catch(Exception e){
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return super.onMenuOpened(featureId, menu);
     }
 
     @Override
