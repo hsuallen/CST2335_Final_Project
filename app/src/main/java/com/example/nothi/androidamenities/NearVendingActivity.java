@@ -173,7 +173,7 @@ public class NearVendingActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu m) {
-        getMenuInflater().inflate(R.menu.toolbar_about, m);
+        getMenuInflater().inflate(R.menu.toolbar_menu_overflow, m);
         return true;
     }
 

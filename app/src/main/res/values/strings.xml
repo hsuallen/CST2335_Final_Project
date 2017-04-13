@@ -23,8 +23,8 @@
 
     <!-- Main Activity Strings -->
     <string name="main_welcome">Welcome to Where\'s the Microwave?!</string>
-    <string name="main_begin">To start out, choose one of the icons at the top. Each of the icons
-    represent microwaves, vending machines, printers, and washrooms in the order from left to right.</string>
+    <string name="main_begin">To start out, choose one of the icons in the following list and find
+    the nearest amenity of that kind near you!</string>
     <string name="main_about">This app is created for the purpose of CST2335 final project. It is a
     collaboration project between Allen Hsu, Scott McClare, Wei Cui, and Jacob Heaton.</string>
 
