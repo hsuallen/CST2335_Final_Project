@@ -75,8 +75,6 @@ public class NearVendingActivity extends AppCompatActivity {
             this.description = description;
         }
 
-        public void setClassroom(String classroom) { this.building = classroom; }
-        public void setDescription(String description) { this.description = description; }
         public String getBuilding() { return this.building; }
         public String getDescription() { return this.description; }
     }

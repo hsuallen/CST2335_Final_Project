@@ -32,11 +32,6 @@ public class BuildingDatabaseHelper extends SQLiteOpenHelper {
     // urls for master database
     private static String URL_ROOT = "http://algonquinstudents.ca/~hsu00016/android/";
     private static String URL_LIST = URL_ROOT + "list_of_buildings.xml";
-    private static String URL_ACCE = URL_ROOT + "ACCE_";
-    private static String URL_B = URL_ROOT + "B_";
-    private static String URL_C = URL_ROOT + "C_";
-    private static String URL_E = URL_ROOT + "E_";
-    private static String URL_T = URL_ROOT + "T_";
 
     private String buildings[] = new String[]{"ACCE", "B", "C", "E", "T"};
     private String fullname[] = new String[]{"Algonquin Centre for Construction Excellence",
