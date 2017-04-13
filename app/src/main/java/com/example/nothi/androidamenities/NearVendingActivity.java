@@ -182,10 +182,20 @@ public class NearVendingActivity extends AppCompatActivity {
         int id = mi.getItemId();
 
         switch(id) {
-            case R.id.action_help:
-                // TODO: add a snackbar here
+            case R.id.action_zero:
+                View root = findViewById(R.id.parent_root);
+                Snackbar.make(root, "Infoz", Snackbar.LENGTH_LONG).setAction("Help", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(NearVendingActivity.this, help_vending.class);
+                        startActivity(intent);
+                    }
+                }).show();
                 break;
-            case R.id.action_home: finish(); break;
+            case R.id.action_one: startActivity(new Intent(this, MainActivity.class)); break;
+            case R.id.action_two: startActivity(new Intent(this, NearMicrowave.class)); break;
+            case R.id.action_three: startActivity(new Intent(this, NearPrinterActivity.class)); break;
+            case R.id.action_four: startActivity(new Intent(this, MainActivity.class)); break;
         }
         return true;
     }
