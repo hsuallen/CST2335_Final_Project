@@ -7,9 +7,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Xml;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -37,94 +40,13 @@ import java.util.HashMap;
 
 public class BuildingFragment extends Fragment {
     protected boolean isTablet;
+    protected int nFloors;
     protected long id;
     protected ProgressBar progressBar;
     protected String buildingStr, descriptionStr, url;
     protected TextView classroomTV, descriptionTV;
     protected View gui;
     private HashMap<String, Integer> buildingFloors;
-    private Query q;
-
-    class BuildingFloor {
-        String building;
-        int floors;
-
-        BuildingFloor(String building, int floors) {
-            this.building = building;
-            this.floors = floors;
-        }
-
-        public String getBuilding() { return building; }
-        public int getFloors() { return floors; }
-    }
-
-    class Query extends AsyncTask<String, Integer, String> {
-        protected String doInBackground(String ... args) {
-            InputStream in = null;
-            try {
-                URL url = new URL(args[0]);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000 /* milliseconds */);
-                conn.setConnectTimeout(15000 /* milliseconds */);
-                conn.setRequestMethod("GET");
-                conn.setDoInput(true);
-                conn.connect();
-                in = conn.getInputStream();
-
-                XmlPullParser parser = Xml.newPullParser();
-                parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-                parser.setInput(in, null);
-                parser.nextTag();
-
-                while (parser.next() != XmlPullParser.END_DOCUMENT) {
-                    if (parser.getEventType() != XmlPullParser.START_TAG) continue;
-
-                    String name = parser.getName();
-                    if (name != "entry") {
-                        int nFloor = Integer.parseInt(parser.getAttributeValue(null, "floors"));
-                        buildingFloors.put(name, nFloor);
-                    }
-                }
-            } catch (XmlPullParserException p) {
-            } catch (IOException e ) {
-            }
-
-            return null;
-        }
-
-        protected void onPostExecute(String s) {
-            progressBar.setVisibility(View.INVISIBLE);
-
-            ArrayList<String> floors = new ArrayList<>();
-            for (int i = 0; i < buildingFloors.get(buildingStr); i++) {
-                floors.add("Floor " + (i + 1));
-            }
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(gui.getContext(),
-                    R.layout.floor_row, floors);
-
-            ListView listView = (ListView)gui.findViewById(R.id.listView2);
-            listView.setAdapter(adapter);
-
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (isTablet) {
-                    } else {
-                        Intent intent = new Intent(getActivity(), Transaction.class);
-                        intent.putExtra("fragType", "floor");
-
-                        startActivityForResult(intent, 5);
-                    }
-                }
-            });
-        }
-
-        protected void onProgressUpdate(Integer ...value) {
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.setProgress(value[0]);
-        }
-    }
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -136,20 +58,13 @@ public class BuildingFragment extends Fragment {
         id = bun.getLong("ID");
         buildingStr = bun.getString("building");
         descriptionStr = bun.getString("description");
+        nFloors = bun.getInt("floors");
         isTablet = bun.getBoolean("isTablet");
-
-        url = "http://algonquinstudents.ca/~hsu00016/android/list_of_buildings.xml";
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         gui = inflater.inflate(R.layout.building_details_layout, null);
-
-        Toast.makeText(gui.getContext(), "Fetching floors...", Toast.LENGTH_SHORT).show();
-
-        progressBar = (ProgressBar)gui.findViewById(R.id.progressBar);
-        q = new Query();
-        q.execute(url);
 
         classroomTV = (TextView)gui.findViewById(R.id.textView9);
         classroomTV.setText(buildingStr);
@@ -157,10 +72,24 @@ public class BuildingFragment extends Fragment {
         descriptionTV = (TextView)gui.findViewById(R.id.textView10);
         descriptionTV.setText(String.valueOf(descriptionStr));
 
-        Button edit = (Button)gui.findViewById(R.id.button7);
-        edit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                customDialog();
+        Log.i("TEST", "floors: " + nFloors);
+        ArrayList<String> floors = new ArrayList<>();
+        for (int i = 0; i < nFloors; i++) floors.add("Floor " + (i + 1));
+
+        ListView list = (ListView)gui.findViewById(R.id.listView2);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(gui.getContext(), R.layout.floor_row, floors);
+        list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (isTablet) {
+                } else {
+                    Intent intent = new Intent(getActivity(), Transaction.class);
+                    intent.putExtra("fragType", "floor");
+
+                    startActivityForResult(intent, 5);
+                }
             }
         });
 
@@ -180,40 +109,5 @@ public class BuildingFragment extends Fragment {
         });
 
         return gui;
-    }
-
-    private void customDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-
-        View dialog = inflater.inflate(R.layout.allen_classroom_input, null);
-        final EditText room = (EditText)dialog.findViewById(R.id.editText1);
-        final EditText desc = (EditText)dialog.findViewById(R.id.editText2);
-        room.setText(buildingStr);
-        desc.setText(descriptionStr);
-
-        builder.setView(dialog);
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                String classroom = room.getText().toString();
-                String description = desc.getText().toString();
-
-                buildingStr = classroom;
-                descriptionStr = description;
-                classroomTV.setText(classroom);
-                descriptionTV.setText(description);
-
-                Intent intent = new Intent();
-                intent.putExtra("building", classroom);
-                intent.putExtra("desc", description);
-                getActivity().setResult(NearVendingActivity.EDIT_BUILDING, intent);
-            }
-        });
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-            }
-        });
-
-        builder.create().show();
     }
 }

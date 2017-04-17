@@ -15,6 +15,12 @@
     <ListView
         android:id="@+id/listView3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="429dp"
         android:background="@android:color/background_light"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_vending_machine" />
 </LinearLayout>

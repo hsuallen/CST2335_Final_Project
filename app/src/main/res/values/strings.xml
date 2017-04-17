@@ -12,13 +12,17 @@
 
     <!-- Buildings Related Strings -->
     <string name="add_building">Add Building</string>
-    <string name="delete_building">Delete</string>
+    <string name="delete_building">Delete Building</string>
     <string name="building">Building</string>
     <string name="description">Description</string>
     <string name="edit_building">Edit</string>
     <string name="enter_new_building">Enter a new building:</string>
-    <string name="floor_description">Here you can find a list of vending machines:</string>
     <string name="pick_a_building">Pick a building:</string>
+
+    <!-- Floors Related Strings -->
+    <string name="add_vending_machine">Add a Vending Machine</string>
+    <string name="floor_description">Here you can find a list of vending machines:</string>
+    <string name="floors">Floors</string>
     <string name="pick_floor">Pick a floor:</string>
 
     <!-- Main Activity Strings -->
@@ -41,4 +45,17 @@
     <!-- Settings Strings -->
     <string name="settings">Settings</string>
     <string name="colour_icons">Use coloured icons</string>
+
+    <!-- Vending Machine Help Strings -->
+    <string name="vending_help_welcome">Welcome to the help interface!</string>
+    <string name="vending_paragraph1">This activity will help you find the closest vending machine
+    to you wherever you are on campus!</string>
+    <string name="vending_paragraph2">First, choose the building from the list that you are currently
+    in.</string>
+    <string name="vending_paragraph3">Then from the list of floors, pick a floor in that building.</string>
+    <string name="vending_paragraph4">Finally, a list of short descriptions will then appear, a list
+    of vending machines can then be found in that list.</string>
+    <string name="vending_about">About the Author</string>
+    <string name="vending_about_author">My name is Allen Hsu, I am a self driven student who is
+    currently studying computer programming at Algonquin College.</string>
 </resources>

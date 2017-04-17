@@ -37,12 +37,6 @@
         android:textColor="#444"
         android:textSize="20dp" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <TextView
         android:id="@+id/textView11"
         android:layout_width="match_parent"
@@ -63,13 +57,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/edit_building" />
 
         <Button
             android:id="@+id/button6"
