@@ -16,15 +16,35 @@
         android:text="@string/enter_new_building"
         android:textColor="#444"
         android:textSize="20dp" />
-    <EditText
-        android:id="@+id/editText1"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp"
-        android:hint="@string/building" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:hint="@string/building" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:hint="@string/floors" />
+    </LinearLayout>
+
     <EditText
         android:id="@+id/editText2"
         android:layout_width="match_parent"
