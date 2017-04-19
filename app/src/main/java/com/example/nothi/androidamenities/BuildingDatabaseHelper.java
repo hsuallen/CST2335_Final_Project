@@ -25,8 +25,7 @@ import java.util.HashMap;
 public class BuildingDatabaseHelper extends SQLiteOpenHelper {
     // database info
     public static String DATABASE_NAME = "ROOT";
-    public static int VERSION_NUM = 1;
-
+    public static int VERSION_NUM = 7;
     // buildings table keys
     public final static String KEY_ID = "_id";
     public final static String KEY_BUILDING = "BUILDING";
@@ -34,28 +33,24 @@ public class BuildingDatabaseHelper extends SQLiteOpenHelper {
     public final static String KEY_FLOORS = "FLOORS";
 
     // stuffs
-    public final static String KEY_VENDING_MACHINES = "VENDING_MACHINES";
     public final static String KEY_BUILDING_FLOOR = "BUILDING_FLOOR";
 
-    public static String name = "buildings";
-    public static String floor_desc = "floorDescriptions";
+    public static String TABLE_BUILDINGS = "buildings";
+    public static String TABLE_VENDING = "VENDING_MACHINES";
     private String CLASS_NAME = "BuildingDatabaseHelper";
 
     // urls for master database
-    private static String URL_ROOT = "http://algonquinstudents.ca/~hsu00016/android/";
-    private static String URL_LIST = URL_ROOT + "list_of_buildings.xml";
+    private static String URL_ROOT = "http://algonquinstudents.ca/~hsu00016/android/master_list.xml";
 
     // other class variables
     private ArrayList<Building> buildings = new ArrayList<>();
-    private HashMap<String, String[]> vendingLocations;
-    private boolean gettingFloors;
+    private ArrayList<VendingMachine> vending_machines = new ArrayList<>();
     private Query q;
     private SQLiteDatabase database;
 
 
     public BuildingDatabaseHelper(Context ctx) {
         super(ctx, DATABASE_NAME, null, VERSION_NUM);
-        gettingFloors = false;
     }
 
     class Query extends AsyncTask<String, Integer, String> {
@@ -80,14 +75,13 @@ public class BuildingDatabaseHelper extends SQLiteOpenHelper {
                     if (parser.getEventType() != XmlPullParser.START_TAG) continue;
 
                     String tag = parser.getName();
-                    if (!gettingFloors) {
-                        if (tag != "entry") {
-                            String name = parser.getAttributeValue(null, "name");
-                            int nFloors = Integer.parseInt(parser.getAttributeValue(null, "floors"));
-                            Log.i("gg", tag + " ,Building: "+ name);
-                            buildings.add(new Building(tag, name, nFloors));
-                        }
+                    if (!tag.contains("_")) {
+                        String name = parser.getAttributeValue(null, "name");
+                        int nFloors = Integer.parseInt(parser.getAttributeValue(null, "floors"));
+                        buildings.add(new Building(tag, name, nFloors));
                     } else {
+                        String desc = parser.getAttributeValue(null, "desc");
+                        vending_machines.add(new VendingMachine(tag, desc));
                     }
                 }
             } catch (XmlPullParserException p) {
@@ -98,24 +92,22 @@ public class BuildingDatabaseHelper extends SQLiteOpenHelper {
         }
 
         protected void onPostExecute(String s) {
-            if (!gettingFloors) {
-                ContentValues cv = new ContentValues();
-                for (int i = 0; i < buildings.size(); i++) {
-                    String buildingCode = buildings.get(i).getCode();
-                    cv.put(BuildingDatabaseHelper.KEY_BUILDING, buildingCode);
-                    cv.put(BuildingDatabaseHelper.KEY_DESCRIPTION, buildings.get(i).getDescription());
-                    cv.put(BuildingDatabaseHelper.KEY_FLOORS, buildings.get(i).getFloors());
-                    database.insert(BuildingDatabaseHelper.name, "Null replacement value", cv);
-                }
-            } else {
-                for (int i = 0; i < buildings.size(); i++) {
-                    for (int j = 0; j < buildings.get(i).getFloors(); i++) {
-                        q.execute(URL_ROOT + buildings.get(i).getCode() + "_" + (j+1) + ".xml");
-                    }
-                }
+            ContentValues cv = new ContentValues();
+
+            for (int i = 0; i < buildings.size(); i++) {
+                cv.put(KEY_BUILDING, buildings.get(i).getCode());
+                cv.put(KEY_DESCRIPTION, buildings.get(i).getDescription());
+                cv.put(KEY_FLOORS, buildings.get(i).getFloors());
+                database.insert(TABLE_BUILDINGS, "Null replacement value", cv);
             }
 
-            gettingFloors = true;
+            cv = new ContentValues();
+            for (int i = 0; i < vending_machines.size(); i++) {
+                Log.i("asdaddas", vending_machines.get(i).getBuildingFloor());
+                cv.put(KEY_BUILDING_FLOOR, vending_machines.get(i).getBuildingFloor());
+                cv.put(KEY_DESCRIPTION, vending_machines.get(i).getDescription());
+                database.insert(TABLE_VENDING, "Null replacement value", cv);
+            }
         }
     }
 
@@ -134,23 +126,36 @@ public class BuildingDatabaseHelper extends SQLiteOpenHelper {
         public int getFloors() { return floors; }
     }
 
+    private class VendingMachine {
+        String buildingFloor, description;
+
+        public VendingMachine(String buildingFloor, String description) {
+            this.buildingFloor = buildingFloor;
+            this.description = description;
+        }
+
+        public String getBuildingFloor() { return buildingFloor; }
+        public String getDescription() { return description; }
+    }
+
     public void onCreate(SQLiteDatabase db) {
         Log.i(CLASS_NAME, "Calling onCreate");
         database = db;
 
-        db.execSQL("CREATE TABLE " + name + " (" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+        db.execSQL("CREATE TABLE " + TABLE_BUILDINGS + " (" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KEY_BUILDING + " text, " + KEY_DESCRIPTION + " text, " + KEY_FLOORS + " INTEGER);");
 
-        db.execSQL("CREATE TABLE " + floor_desc + " (" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+        db.execSQL("CREATE TABLE " + TABLE_VENDING + " (" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KEY_BUILDING_FLOOR + " text, " + KEY_DESCRIPTION + " text);");
 
         q = new Query();
-        q.execute(URL_LIST);
+        q.execute(URL_ROOT);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVer, int newVer) {
         Log.i(CLASS_NAME, "Calling onUpgrade, oldVersion=" + oldVer + " newVersion=" + newVer);
-        db.execSQL("DROP TABLE IF EXISTS " + name);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUILDINGS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_VENDING);
         onCreate(db);
     }
 }
