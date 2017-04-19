@@ -14,7 +14,6 @@ public class Transaction extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String type = bundle.getString("fragType");
-        Log.i("Middleman", "Fragment type is: " + type);
         Fragment fragment = null;
         switch(type) {
             case "building":

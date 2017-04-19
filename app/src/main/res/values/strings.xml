@@ -21,6 +21,8 @@
 
     <!-- Floors Related Strings -->
     <string name="add_vending_machine">Add a Vending Machine</string>
+    <string name="delete_vending">Delete vending machine?</string>
+    <string name="enter_vending">Enter a vending machine:</string>
     <string name="floor_description">Here you can find a list of vending machines:</string>
     <string name="floors">Floors</string>
     <string name="pick_floor">Pick a floor:</string>

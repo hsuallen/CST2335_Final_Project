@@ -107,7 +107,6 @@ public class NearVendingActivity extends AppCompatActivity {
                 String building = cursor.getString(cursor.getColumnIndex(BuildingDatabaseHelper.KEY_BUILDING));
                 String desc = cursor.getString(cursor.getColumnIndex(BuildingDatabaseHelper.KEY_DESCRIPTION));
                 int nFloors = cursor.getInt(cursor.getColumnIndex(BuildingDatabaseHelper.KEY_FLOORS));
-                Log.i(ACTIVITY_NAME, "Building: " + building);
                 buildings.add(new Building(building, desc, nFloors));
                 cursor.moveToNext();
             }
@@ -139,7 +138,6 @@ public class NearVendingActivity extends AppCompatActivity {
                     int floors = cursor.getInt(cursor.getColumnIndex(BuildingDatabaseHelper.KEY_FLOORS));
 
                     pos = position;
-                    Log.i(ACTIVITY_NAME, "Current position: " + pos);
 
                     if (isTablet) {
                         BuildingFragment fragment = new BuildingFragment();
@@ -192,7 +190,7 @@ public class NearVendingActivity extends AppCompatActivity {
     }
 
     public void deleteBuilding(long id) {
-        db.delete(BuildingDatabaseHelper.name, BuildingDatabaseHelper.KEY_ID + "=" + id, null);
+        db.delete(BuildingDatabaseHelper.TABLE_BUILDINGS, BuildingDatabaseHelper.KEY_ID + "=" + id, null);
         adapter.remove(adapter.getItem(pos));
         buildings.remove(pos);
         adapter.notifyDataSetChanged();
@@ -205,7 +203,7 @@ public class NearVendingActivity extends AppCompatActivity {
         cv.put(BuildingDatabaseHelper.KEY_BUILDING, room);
         cv.put(BuildingDatabaseHelper.KEY_DESCRIPTION, desc);
         cv.put(BuildingDatabaseHelper.KEY_FLOORS, nFloors);
-        db.insert(BuildingDatabaseHelper.name, "Null replacement value", cv);
+        db.insert(BuildingDatabaseHelper.TABLE_BUILDINGS, "Null replacement value", cv);
         updateCursor();
         adapter.notifyDataSetChanged();
     }
@@ -236,7 +234,7 @@ public class NearVendingActivity extends AppCompatActivity {
     }
 
     private void updateCursor() {
-        cursor = db.query(BuildingDatabaseHelper.name, new String[]{BuildingDatabaseHelper.KEY_BUILDING,
+        cursor = db.query(BuildingDatabaseHelper.TABLE_BUILDINGS, new String[]{BuildingDatabaseHelper.KEY_BUILDING,
                         BuildingDatabaseHelper.KEY_DESCRIPTION, BuildingDatabaseHelper.KEY_FLOORS,
                         BuildingDatabaseHelper.KEY_ID},null, null, null, null, null);
         cursor.moveToFirst();
