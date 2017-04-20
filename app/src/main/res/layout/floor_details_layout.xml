@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView13"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:text="@string/floor_description"
-        android:textColor="#444"
-        android:textSize="18dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@+id/button2">
 
-    <ListView
-        android:id="@+id/listView3"
-        android:layout_width="match_parent"
-        android:layout_height="391dp"
-        android:background="@android:color/background_light" />
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="@string/floor_description"
+            android:textColor="#444"
+            android:textSize="18dp" />
+
+        <ListView
+            android:id="@+id/listView3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Button"
+        android:layout_alignParentBottom="true" />
 
-</LinearLayout>
+</RelativeLayout>

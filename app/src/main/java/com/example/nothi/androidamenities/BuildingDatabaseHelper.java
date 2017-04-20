@@ -25,7 +25,7 @@ import java.util.HashMap;
 public class BuildingDatabaseHelper extends SQLiteOpenHelper {
     // database info
     public static String DATABASE_NAME = "ROOT";
-    public static int VERSION_NUM = 7;
+    public static int VERSION_NUM = 1;
     // buildings table keys
     public final static String KEY_ID = "_id";
     public final static String KEY_BUILDING = "BUILDING";
