@@ -43,6 +43,7 @@
     <string name="cancel">Cancel</string>
     <string name="messageTitleText">Messages:</string>
     <string name="ok">Ok</string>
+    <string name="sort_list">Sort List</string>
 
     <!-- Settings Strings -->
     <string name="settings">Settings</string>

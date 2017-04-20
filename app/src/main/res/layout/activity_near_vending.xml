@@ -16,7 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:layout_above="@+id/button3">
 
         <TextView
             android:id="@+id/textView"
@@ -25,16 +26,17 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="@string/pick_a_building" />
+            android:text="@string/pick_a_building"
+            android:textSize="18dp" />
 
         <ListView
             android:id="@+id/listview"
             android:layout_width="match_parent"
-            android:layout_height="382dp"
+            android:layout_height="match_parent"
             android:layout_above="@+id/editText1"
             android:layout_below="@+id/textView"
-            android:layout_weight="0.51"
-            android:background="@android:color/background_light"></ListView>
+            android:background="@android:color/background_light">
+        </ListView>
     </LinearLayout>
 
     <Button
