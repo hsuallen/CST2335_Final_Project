@@ -28,7 +28,19 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * MainActivity
+ *
+ * This is the main activity of the entire app, in other words the main menu.
+ *
+ * @author Allen Hsu
+ *
+ */
 public class MainActivity extends AppCompatActivity {
+
+    /******************* START OF CLASS VARIABLES *******************/
+
     protected static final String ACTIVITY_NAME = "OptionsActivity";
     private ArrayList<ActivityRow> activities = new ArrayList<>();
     private EditText coordInput;
@@ -46,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
     //first para, name of preference's file
     SharedPreferences.Editor editallInfo;
 
+    /******************** END OF CLASS VARIABLES ********************/
+
+    /**
+     * This is the custom ArrayAdapter for the ListView which contains various amenities in the
+     *   main menu.
+     */
     protected class ActivitiesAdapter extends ArrayAdapter<ActivityRow> {
         public ActivitiesAdapter(Context ctx, int resource, List<ActivityRow> objects) {
             super(ctx, resource, objects);
@@ -79,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
         public String getTitle() {return title; }
     }
 
+    /**
+     * The onCreate function for an activity.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
