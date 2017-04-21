@@ -80,7 +80,7 @@ public class NearVendingActivity extends AppCompatActivity {
         public Building getItem(int pos) { return buildings.get(pos); }
 
         /**
-         *
+         * TODO: write something
          * @param pos
          * @param convertView
          * @param Parent
@@ -162,7 +162,7 @@ public class NearVendingActivity extends AppCompatActivity {
             id = data.getLongExtra("ID", 0);
             deleteBuilding(id);
             View root = findViewById(R.id.parent_root);
-            genericFunctions.createSnackbar(root, "Building deleted.", Snackbar.LENGTH_LONG);
+            genericFunctions.createSnackbar(root, "Building deleted.", Snackbar.LENGTH_SHORT);
         }
     }
 
